@@ -1,0 +1,26 @@
+{
+  "name": "learningtour",
+  "description": "linkedin hopscotch wrapper package for laravel projects",
+  "main": "",
+  "keywords": [
+    "hopscotch",
+    "laravel"
+  ],
+  "authors": [
+    "Majesko"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.*",
+    "hopscotch": "^0.2.6"
+  }
+}

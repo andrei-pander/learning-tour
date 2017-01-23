@@ -1,0 +1,18 @@
+{
+    "name": "majesko/learningtour",
+    "description": "wrapper for linkedin hopscotch for laravel projects",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/routing": "~5.1.*",
+        "illuminate/http": "~5.1.*",
+        "illuminate/database": "~5.1.*",
+        "illuminate/support": "~5.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Majesko\\LearningTour\\": "src/"
+        }
+    }
+}
