@@ -12,8 +12,7 @@ class LearningTourProvider extends ServiceProvider
 	 *
 	 * @return void
 	 */
-	public function boot()
-	{
+	public function boot() {
 		$this->publishes([
 			__DIR__.'/config/learningtour.php' => config_path('learningtour.php'),
 		]);
@@ -32,8 +31,7 @@ class LearningTourProvider extends ServiceProvider
 	 *
 	 * @return void
 	 */
-	public function register()
-	{
+	public function register() {
 		$this->mergeConfigFrom(
 			__DIR__.'/config/learningtour.php', 'learningtour'
 		);

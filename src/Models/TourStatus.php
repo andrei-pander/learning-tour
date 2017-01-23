@@ -18,8 +18,7 @@ class TourStatus extends Model
 {
 	protected $fillable = ['tour_id', 'user_id', 'step_id', 'step', 'completed_at'];
 
-	public function tour()
-	{
+	public function tour() {
 		return $this->belongsTo(Tour::class);
 	}
 
@@ -29,8 +28,7 @@ class TourStatus extends Model
 	 * @param Model $user
 	 * @return TourStatus
 	 */
-	public function createStatus(Tour $tour, TourStep $step, Model $user)
-	{
+	public function createStatus(Tour $tour, TourStep $step, Model $user) {
 		return TourStatus::create([
 			'tour_id' => $tour->id,
 			'user_id' => $user->id,
@@ -43,16 +41,14 @@ class TourStatus extends Model
 	 * @param Model $user
 	 * @return TourStatus
 	 */
-	public function findUncompleted(Tour $tour, Model $user)
-	{
+	public function findUncompleted(Tour $tour, Model $user) {
 		return TourStatus::where('user_id', $user->getKey())
 			->where('tour_id', $tour->getKey())
 			->whereNull('completed_at')
 			->firstOrFail();
 	}
 
-	public static function oneUncompleted($user, $tour)
-	{
+	public static function oneUncompleted($user, $tour) {
 		return self::query()
 			->where('user_id', $user->id)
 			->where('tour_id', $tour->id)

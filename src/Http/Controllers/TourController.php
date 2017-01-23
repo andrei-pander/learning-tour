@@ -14,8 +14,7 @@ class TourController extends Controller
 	 * @param integer $tour_id
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function postComplete($tour_id)
-	{
+	public function postComplete($tour_id) {
 		/** @var Tour $tour */
 		$tour = Tour::query()->findOrFail($tour_id);
 		$tour->completeTour(auth()->user());
@@ -30,8 +29,7 @@ class TourController extends Controller
 	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function postSaveStep($step_id)
-	{
+	public function postSaveStep($step_id) {
 		TourStep::oneChild($step_id)->setCurrent(auth()->user());
 
 		return response('');

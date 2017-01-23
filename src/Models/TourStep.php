@@ -22,13 +22,11 @@ class TourStep extends Model
 
 	protected $table = 'tour_steps';
 
-	public function tour()
-	{
+	public function tour() {
 		return $this->belongsTo(Tour::class);
 	}
 
-	public static function oneChild($step_id)
-	{
+	public static function oneChild($step_id) {
 		return self::query()
 			->where('id', $step_id)
 			->where('active', 1)
@@ -38,8 +36,7 @@ class TourStep extends Model
 			->firstOrFail();
 	}
 
-	public function setCurrent($user)
-	{
+	public function setCurrent($user) {
 		$status = TourStatus::oneUncompleted($user, $this->tour)
 			->firstOrNew([
 				'user_id' => $user->id,

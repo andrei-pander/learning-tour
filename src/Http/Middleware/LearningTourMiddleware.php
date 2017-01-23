@@ -17,8 +17,7 @@ class LearningTourMiddleware
 	 * @param  \Closure $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next)
-	{
+	public function handle($request, Closure $next) {
 		if ( ! $request->isMethod('get')) {
 			return $next($request);
 		}

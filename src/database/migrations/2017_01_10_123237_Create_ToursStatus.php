@@ -12,8 +12,7 @@ class CreateToursStatus extends Migration
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
+	public function up() {
 		Schema::create($this->table, function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('tour_id')->unsigned();
@@ -47,8 +46,7 @@ class CreateToursStatus extends Migration
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop($this->table);
 	}
 }

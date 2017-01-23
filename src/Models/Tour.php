@@ -28,18 +28,15 @@ class Tour extends Model
 		'tour_code', 'name', 'triggers'
 	];
 
-	public function statuses()
-	{
+	public function statuses() {
 		return $this->hasMany(TourStatus::class);
 	}
 
-	public function steps()
-	{
+	public function steps() {
 		return $this->hasMany(TourStep::class);
 	}
 
-	public function uncompleted()
-	{
+	public function uncompleted() {
 		return $this->statuses()->whereNull('completed_at');
 	}
 
@@ -48,8 +45,7 @@ class Tour extends Model
 	 *
 	 * @return bool
 	 */
-	public function completeTour(Model $user)
-	{
+	public function completeTour(Model $user) {
 		$tourStatus = new TourStatus();
 
 		$tourStatus = $tourStatus->findUncompleted($this, $user);
