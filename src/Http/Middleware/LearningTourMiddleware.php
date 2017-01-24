@@ -4,9 +4,9 @@ namespace Majesko\LearningTour\Http\Middleware;
 
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Majesko\LearningTour\Models\Tour;
 use Majesko\LearningTour\Models\TourStatus;
-use Auth;
 
 class LearningTourMiddleware
 {
@@ -82,7 +82,7 @@ class LearningTourMiddleware
 			}
 
 			/*
-			 * If tour allready completed by user, mark it as completed
+			 * If tour already completed by user, mark it as completed
 			 */
 			if (TourStatus::query()
 				->where('user_id', Auth::id())

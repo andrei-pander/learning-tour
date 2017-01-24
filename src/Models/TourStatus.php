@@ -31,27 +31,22 @@ class TourStatus extends Model
 	public function createStatus(Tour $tour, TourStep $step, Model $user) {
 		return TourStatus::create([
 			'tour_id' => $tour->id,
-			'user_id' => $user->id,
+			'user_id' => $user->getKey(),
 			'step_id' => $step->id
 		]);
 	}
 
 	/**
-	 * @param Tour $tour
 	 * @param Model $user
+	 * @param Tour $tour
 	 * @return TourStatus
 	 */
-	public function findUncompleted(Tour $tour, Model $user) {
-		return TourStatus::where('user_id', $user->getKey())
-			->where('tour_id', $tour->getKey())
-			->whereNull('completed_at')
-			->firstOrFail();
-	}
+	public static function oneUncompleted(Model $user, Tour $tour) {
 
-	public static function oneUncompleted($user, $tour) {
 		return self::query()
-			->where('user_id', $user->id)
+			->where('user_id', $user->getKey())
 			->where('tour_id', $tour->id)
-			->whereNull('completed_at');
+			->whereNull('completed_at')
+			->first();
 	}
 }

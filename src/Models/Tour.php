@@ -48,7 +48,7 @@ class Tour extends Model
 	public function completeTour(Model $user) {
 		$tourStatus = new TourStatus();
 
-		$tourStatus = $tourStatus->findUncompleted($this, $user);
+		$tourStatus = $tourStatus->oneUncompleted($user, $this);
 		$tourStatus->completed_at = Carbon::now();
 		$tourStatus->save();
 

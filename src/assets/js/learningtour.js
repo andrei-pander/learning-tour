@@ -38,7 +38,7 @@ var learningTour = (function () {
             }
 
 
-            // Use Helper Layer for hilight target element.
+            // Use Helper Layer for highlight target element.
 
             var helperPosX = targetEl.offset().left;
             var helperPosY = targetEl.offset().top;

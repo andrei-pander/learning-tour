@@ -20,8 +20,6 @@ class TourStep extends Model
 	protected $visible = ['id', 'target', 'placement', 'title', 'content',
 		'show_close_button', 'show_prev_button', 'show_next_button', 'next_on_target_click'];
 
-	protected $table = 'tour_steps';
-
 	public function tour() {
 		return $this->belongsTo(Tour::class);
 	}
@@ -30,18 +28,16 @@ class TourStep extends Model
 		return self::query()
 			->where('id', $step_id)
 			->where('active', 1)
-			->with(['tour' => function($query) {
-				$query->where('active', 1);
-			}])
 			->firstOrFail();
 	}
 
-	public function setCurrent($user) {
-		$status = TourStatus::oneUncompleted($user, $this->tour)
-			->firstOrNew([
-				'user_id' => $user->id,
-				'tour_id' => $this->tour->id,
-			]);
+	public function setCurrent(Model $user) {
+
+		$status = TourStatus::oneUncompleted($user, $this->tour);
+
+		if ( ! $status) {
+			return (new TourStatus())->createStatus($this->tour, $this, $user);
+		}
 		$status->step_id = $this->id;
 
 		return $status->save();

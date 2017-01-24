@@ -2,7 +2,6 @@
 
 namespace Majesko\LearningTour;
 
-use Blade;
 use Illuminate\Support\ServiceProvider;
 
 class LearningTourProvider extends ServiceProvider
