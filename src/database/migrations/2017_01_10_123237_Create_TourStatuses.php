@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTourStatus extends Migration
+class CreateTourStatuses extends Migration
 {
 	private $table = 'tour_statuses';
 

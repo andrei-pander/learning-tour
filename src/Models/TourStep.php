@@ -28,6 +28,9 @@ class TourStep extends Model
 		return self::query()
 			->where('id', $step_id)
 			->where('active', 1)
+			->whereHas('tour', function ($query) {
+				$query->where('active', 1);
+			})
 			->firstOrFail();
 	}
 
