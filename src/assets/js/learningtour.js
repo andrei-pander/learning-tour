@@ -6,7 +6,7 @@ var learningTour = (function () {
         currentTour: '',
         toursData: [],
         fetchToursPath: '/tours/tour',
-        updateStepPath: '/tours/save-step',
+        updateStepPath: '/tours/update-step',
         completeTourPath: '/tours/complete'
     };
 

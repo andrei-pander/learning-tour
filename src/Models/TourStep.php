@@ -23,26 +23,4 @@ class TourStep extends Model
 	public function tour() {
 		return $this->belongsTo(Tour::class);
 	}
-
-	public static function oneChild($step_id) {
-		return self::query()
-			->where('id', $step_id)
-			->where('active', 1)
-			->whereHas('tour', function ($query) {
-				$query->where('active', 1);
-			})
-			->firstOrFail();
-	}
-
-	public function setCurrent(Model $user) {
-
-		$status = TourStatus::oneUncompleted($user, $this->tour);
-
-		if ( ! $status) {
-			return (new TourStatus())->createStatus($this->tour, $this, $user);
-		}
-		$status->step_id = $this->id;
-
-		return $status->save();
-	}
 }

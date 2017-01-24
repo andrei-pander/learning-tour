@@ -28,30 +28,7 @@ class Tour extends Model
 		'tour_code', 'name', 'triggers'
 	];
 
-	public function statuses() {
-		return $this->hasMany(TourStatus::class);
-	}
-
 	public function steps() {
 		return $this->hasMany(TourStep::class);
-	}
-
-	public function uncompleted() {
-		return $this->statuses()->whereNull('completed_at');
-	}
-
-	/**
-	 * @param Model $user
-	 *
-	 * @return bool
-	 */
-	public function completeTour(Model $user) {
-		$tourStatus = new TourStatus();
-
-		$tourStatus = $tourStatus->oneUncompleted($user, $this);
-		$tourStatus->completed_at = Carbon::now();
-		$tourStatus->save();
-
-		return true;
 	}
 }

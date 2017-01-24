@@ -4,7 +4,7 @@ namespace Majesko\LearningTour\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Majesko\LearningTour\Models\Tour;
+use Majesko\LearningTour\Models\TourStatus;
 use Majesko\LearningTour\Models\TourStep;
 
 class TourController extends Controller
@@ -16,9 +16,8 @@ class TourController extends Controller
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function postComplete($tour_id) {
-		/** @var Tour $tour */
-		$tour = Tour::query()->findOrFail($tour_id);
-		$tour->completeTour(Auth::user());
+		$status = TourStatus::getUncompleted(Auth::user(), $tour_id);
+		$status->completeTour();
 
 		return response('');
 	}
@@ -30,9 +29,17 @@ class TourController extends Controller
 	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function postSaveStep($step_id) {
-		$step = TourStep::oneChild($step_id);
-		$step->setCurrent(Auth::user());
+	public function postUpdateStep($step_id) {
+		$step = TourStep::findOrFail($step_id);
+		$tour = $step->tour;
+
+		$status = TourStatus::getUncompleted(Auth::user(), $tour->id);
+
+		if( ! $status) {
+			(new TourStatus())->createStatus(Auth::user(), $tour, $step_id);
+		} else {
+			$status->updateStatus($step_id);
+		}
 
 		return response('');
 	}
