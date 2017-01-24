@@ -35,9 +35,10 @@ class TourController extends Controller
 
 		$status = TourStatus::getUncompleted(Auth::user(), $tour->id);
 
-		if( ! $status) {
+		if ( ! $status) {
 			(new TourStatus())->createStatus(Auth::user(), $tour, $step_id);
-		} else {
+		}
+		else {
 			$status->updateStatus($step_id);
 		}
 
