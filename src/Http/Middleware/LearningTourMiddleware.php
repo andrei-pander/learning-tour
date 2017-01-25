@@ -39,18 +39,10 @@ class LearningTourMiddleware
 			->get();
 
 		foreach ($tours as $key => $tour) {
-			$result[$key] = [$tour->tour_code =>
-				[
-					'id' => $tour->tour_code,
-					'name' => $tour->name,
-					'steps' => $tour->steps,
-					'step' => 0,
-					'base_id' => $tour->id,
-					'completed' => 0
-				]];
-
 			/** @var TourStatus $status */
 			$status = TourStatus::getUncompleted(Auth::user(), $tour->id);
+			$currentStep = 0;
+			$completed = 0;
 
 			if ($status) {
 				/*
@@ -59,7 +51,7 @@ class LearningTourMiddleware
 				if ($tour->steps->contains('id', $status->step_id)) {
 					foreach ($tour->steps as $num => $step) {
 						if ($step->id == $status->step_id) {
-							$result[$key][$tour->tour_code]['step'] = $num;
+							$currentStep = $num;
 						}
 					}
 				}
@@ -73,7 +65,7 @@ class LearningTourMiddleware
 					else {
 						foreach ($tour->steps as $num => $step) {
 							if ($step->id == $nextStep->id) {
-								$result[$key][$tour->tour_code]['step'] = $num;
+								$currentStep = $num;
 							}
 						}
 					}
@@ -89,8 +81,19 @@ class LearningTourMiddleware
 				->whereNotNull('completed_at')
 				->count()
 			) {
-				$result[$key][$tour->tour_code]['completed'] = 1;
+				$completed = 1;
 			}
+
+			$result[$key] = [
+				$tour->tour_code => [
+					'id' => $tour->tour_code,
+					'name' => $tour->name,
+					'steps' => $tour->steps,
+					'step' => $currentStep,
+					'base_id' => $tour->id,
+					'completed' => $completed
+				]
+			];
 		}
 
 		view()->share('learningtours', $result);
