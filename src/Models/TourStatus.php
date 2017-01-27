@@ -27,7 +27,7 @@ class TourStatus extends Model
 	 * Creates new initial status;
 	 *
 	 * @param Model $user
-	 * @param TourStep $tour
+	 * @param Tour $tour
 	 * @param string $step_id
 	 *
 	 * @return bool

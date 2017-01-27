@@ -5,7 +5,6 @@ namespace Majesko\LearningTour\Models;
 use App\Models\Status;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 /**
  * @property int id

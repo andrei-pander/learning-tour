@@ -2,10 +2,13 @@
 
 namespace Majesko\LearningTour\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Majesko\LearningTour\Models\TourStatus;
 use Majesko\LearningTour\Models\TourStep;
+use Majesko\LearningTour\Models\Tour;
+use Illuminate\Support\Facades\View;
 
 class TourController extends Controller
 {
@@ -43,5 +46,31 @@ class TourController extends Controller
 		}
 
 		return response('');
+	}
+
+	/**
+	 * Displays list of tours
+	 *
+	 * @return View
+	 */
+	public function getList() {
+
+		$tours = Tour::with('steps')->get();
+
+		return view('learningtour::list', ['tours' => $tours]);
+	}
+
+	public function getEdit($id) {
+		$tour = Tour::find($id);
+
+		return view('learningtour::edit', ['tour' => $tour]);
+	}
+
+	public function postEdit(Request $request, $id) {
+		$tour = Tour::find($id);
+		$tour->name = $request->get('name');
+		$tour->tour_code = $request->get('tour_code');
+		$tour->save();
+		return redirect()->back();
 	}
 }

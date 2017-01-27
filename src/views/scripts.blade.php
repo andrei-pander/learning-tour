@@ -14,7 +14,7 @@
             fetchToursPath: '{{ config('learningtour.routes.fetch_path') }}',
             updateStepPath: '{{ config('learningtour.routes.update_path') }}',
             completeTourPath: '{{ config('learningtour.routes.complete_path') }}',
-            tours: {!! json_encode($tours) !!}
+            tours: {!! json_encode($learningtours) !!}
         };
         learningTour.init(config);
     });
