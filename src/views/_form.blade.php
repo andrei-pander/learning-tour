@@ -1,5 +1,5 @@
-<h1>Tour edit</h1>
-<form class="form col-lg-4" method="post" action="
+<h1>Tour @if(isset($tour)) edit @else create @endif</h1>
+<form class="form" method="post" action="
 		@if(isset($tour))
 			{{ url('/tours/edit', $tour->id) }}
 		@else

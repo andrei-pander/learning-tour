@@ -55,9 +55,25 @@ class TourController extends Controller
 	 */
 	public function getList() {
 
-		$tours = Tour::with('steps')->get();
+		$tours = Tour::with(['steps' => function($query) {
+			$query->orderBy('order', 'asc');
+		}])->get();
 
 		return view('learningtour::list', ['tours' => $tours]);
+	}
+
+	public function getCreate() {
+
+		return view('learningtour::edit');
+	}
+
+	public function postCreate(Request $request) {
+		$tour = new Tour;
+		$tour->tour_code = $request->get('tour_code');
+		$tour->name = $request->get('name');
+		$tour->save();
+
+		return redirect()->to('/tours/list')->with('status', 'Tour saved');
 	}
 
 	public function getEdit($id) {
@@ -71,6 +87,38 @@ class TourController extends Controller
 		$tour->name = $request->get('name');
 		$tour->tour_code = $request->get('tour_code');
 		$tour->save();
+
+		return redirect()->to('/tours/list')->with('status', 'Tour updated');
+	}
+
+	public function getCreateStep($tour_id) {
+		$tour = Tour::find($tour_id);
+
+		return view('learningtour::edit-step', ['tour' => $tour]);
+	}
+
+	public function postCreateStep(Request $request, $tour_id) {
+		$tour = Tour::find($tour_id);
+		$step = new TourStep();
+		$step->title = $request->get('title');
+		$step->content = $request->get('content');
+		$tour->steps()->save($step);
+
+		return redirect()->to('/tours/list');
+	}
+
+	public function getEditStep($id) {
+		$step = TourStep::find($id);
+
+		return view('learningtour::list-steps', ['step' => $step]);
+	}
+
+	public function postEditStep(Request $request, $id) {
+		$step = TourStep::find($id);
+		$step->title = $request->get('title');
+		$step->content = $request->get('content');
+		$step->save();
+
 		return redirect()->back();
 	}
 }

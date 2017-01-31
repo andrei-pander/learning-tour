@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TourStep extends Model
 {
-	protected $visible = ['id', 'target', 'placement', 'title', 'content',
+	protected $visible = ['id', 'target', 'placement', 'title', 'content', 'order', 'position',
 		'show_close_button', 'show_prev_button', 'show_next_button', 'next_on_target_click'];
 
 	public function tour() {
