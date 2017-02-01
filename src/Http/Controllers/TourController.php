@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Majesko\LearningTour\Models\TourStatus;
 use Majesko\LearningTour\Models\TourStep;
 use Majesko\LearningTour\Models\Tour;
-use Illuminate\Support\Facades\View;
 
 class TourController extends Controller
 {
@@ -120,11 +119,14 @@ class TourController extends Controller
 		$step->content = $request->get('content');
 		$step->target = $request->get('target');
 		$step->placement = $request->get('placement');
+		$step->show_close_button = $request->get('show_close_button');
+		$step->show_prev_button = $request->get('show_prev_button');
+		$step->show_next_button = $request->get('show_next_button');
 		$step->order = $request->get('order');
-		$step->route = $request->route('route');
+		$step->route = $request->get('route');
 		$tour->steps()->save($step);
 
-		return redirect()->to('/tours/list');
+		return redirect()->to('/tours/list')->with('message', 'Step created');
 	}
 
 	public function getEditStep($id) {
@@ -142,9 +144,16 @@ class TourController extends Controller
 
 		$step->title = $request->get('title');
 		$step->content = $request->get('content');
+		$step->target = $request->get('target');
+		$step->placement = $request->get('placement');
+		$step->show_close_button = $request->get('show_close_button');
+		$step->show_prev_button = $request->get('show_prev_button');
+		$step->show_next_button = $request->get('show_next_button');
+		$step->order = $request->get('order');
+		$step->route = $request->get('route');
 		$step->save();
 
-		return redirect()->back();
+		return redirect()->to('/tours/list')->with('message', 'Step updated');
 	}
 
 	public function postDeleteStep($id) {

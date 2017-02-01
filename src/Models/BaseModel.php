@@ -6,19 +6,21 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 
-abstract class BaseModel extends Model
-{
+abstract class BaseModel extends Model {
 	protected $errors;
 
 	abstract protected function rules();
 
 	public function validate(Request $request) {
-		$v = Validator::make($request->all(), $this->rules());
+		$validation = Validator::make($request->all(), $this->rules());
 
-		if($v->fails()) {
-			$this->errors = $v->errors();
+		if ($validation->fails()) {
+			$this->errors = $validation->errors();
+
 			return false;
 		}
+
+		return true;
 	}
 
 	public function errors() {

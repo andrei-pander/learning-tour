@@ -15,8 +15,7 @@ use Carbon\Carbon;
  * @property string completed_at
  * @property Tour[]|Collection tour
  */
-class TourStatus extends Model
-{
+class TourStatus extends Model {
 	protected $fillable = ['tour_id', 'user_id', 'step_id', 'step', 'completed_at'];
 
 	public function tour() {

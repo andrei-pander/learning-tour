@@ -2,7 +2,6 @@
 
 namespace Majesko\LearningTour\Models;
 
-use App\Models\Status;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -13,22 +12,17 @@ use Illuminate\Database\Eloquent\Collection;
  *
  * @property TourStep[]|Collection steps
  * @see Tour::steps()
- *
- * @property Status[]|Collection statuses
- * @see Tour::statuses()
- *
- * @property Status[]|Collection uncompleted
- * @see Tour::uncompleted()
  */
-class Tour extends BaseModel
-{
+class Tour extends BaseModel {
 	protected $visible = [
 		'tour_code', 'name', 'triggers'
 	];
 
 	protected function rules() {
-		return ['tour_code' => 'required|unique:tours,tour_code,'.$this->tour_code,
-		'name' => 'required'];
+		return [
+			'tour_code' => 'required|unique:tours,tour_code,'.$this->id,
+			'name' => 'required'
+		];
 	}
 
 	public function steps() {
