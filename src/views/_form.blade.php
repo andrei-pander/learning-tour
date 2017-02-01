@@ -7,16 +7,18 @@
 		@endif
 	">
 	{{ csrf_field() }}
-	<div class="form-group">
-		<label for="tour_code">Tour code</label><br>
+	<div class="form-group @if($errors->has('tour_code')) has-error @endif">
+		<label for="tour_code" class="control-label">Tour code</label><br>
 		<input class="form-control" type="text" name="tour_code" value=
 		"@if(isset($tour)){{ $tour->tour_code }}@endif">
+		<span class="help-block">{{ $errors->first('tour_code') }}</span>
 	</div>
 
-	<div class="form-group">
-		<label for="name">Name</label><br>
+	<div class="form-group @if($errors->has('name')) has-error @endif">
+		<label for="name" class="control-label">Name</label><br>
 		<input class="form-control" type="text" name="name" value=
 		"@if(isset($tour)){{ $tour->name }}@endif">
+		<span class="help-block">{{ $errors->first('name') }}</span>
 	</div>
 
 	<button type="submit" class="btn btn-primary">Save</button>

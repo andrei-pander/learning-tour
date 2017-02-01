@@ -48,11 +48,6 @@ class TourController extends Controller
 		return response('');
 	}
 
-	/**
-	 * Displays list of tours
-	 *
-	 * @return View
-	 */
 	public function getList() {
 
 		$tours = Tour::with(['steps' => function($query) {
@@ -63,12 +58,16 @@ class TourController extends Controller
 	}
 
 	public function getCreate() {
-
 		return view('learningtour::edit');
 	}
 
 	public function postCreate(Request $request) {
 		$tour = new Tour;
+
+		if( ! $tour->validate($request)) {
+			return redirect()->back()->withErrors($tour->errors());
+		}
+
 		$tour->tour_code = $request->get('tour_code');
 		$tour->name = $request->get('name');
 		$tour->save();
@@ -82,8 +81,20 @@ class TourController extends Controller
 		return view('learningtour::edit', ['tour' => $tour]);
 	}
 
+	public function postDelete($id) {
+		$tour = Tour::find($id);
+		$tour->delete();
+		
+		return redirect()->back()->with('message', 'Tour deleted');
+	}
+
 	public function postEdit(Request $request, $id) {
 		$tour = Tour::find($id);
+
+		if( ! $tour->validate($request)) {
+			return redirect()->back()->withErrors($tour->errors());
+		}
+
 		$tour->name = $request->get('name');
 		$tour->tour_code = $request->get('tour_code');
 		$tour->save();
@@ -97,11 +108,20 @@ class TourController extends Controller
 		return view('learningtour::edit-step', ['tour' => $tour]);
 	}
 
-	public function postCreateStep(Request $request, $tour_id) {
-		$tour = Tour::find($tour_id);
+	public function postCreateStep(Request $request) {
+		$tour = Tour::find($request->get('tour_id'));
 		$step = new TourStep();
+
+		if(!$step->validate($request)) {
+			return redirect()->back()->withErrors($step->errors());
+		}
+
 		$step->title = $request->get('title');
 		$step->content = $request->get('content');
+		$step->target = $request->get('target');
+		$step->placement = $request->get('placement');
+		$step->order = $request->get('order');
+		$step->route = $request->route('route');
 		$tour->steps()->save($step);
 
 		return redirect()->to('/tours/list');
@@ -115,10 +135,22 @@ class TourController extends Controller
 
 	public function postEditStep(Request $request, $id) {
 		$step = TourStep::find($id);
+
+		if( ! $step->validate($request)) {
+			return redirect()->back()->withErrors($step->errors());
+		}
+
 		$step->title = $request->get('title');
 		$step->content = $request->get('content');
 		$step->save();
 
 		return redirect()->back();
+	}
+
+	public function postDeleteStep($id) {
+		$step = TourStep::find($id);
+		$step->delete();
+
+		return redirect()->back()->with('message', 'Step deleted');
 	}
 }

@@ -8,7 +8,7 @@
 				<tr>
 					<td>{{ $tour->name }}</td>
 					<td width="10%">
-						<a href="{{ url('/tours/edit', $tour->id) }}">Edit</a>
+						<a href="{{ url('/tours/edit', $tour->id) }}" class="btn btn-xs btn-link">Edit</a>
 					</td>
 					<td width="5%"><a href="#" class="tour-details-open"><i class="glyphicon glyphicon-menu-down"></i></a></td>
 				</tr>
@@ -20,11 +20,22 @@
 								<tr>
 									<td>{{ $step->title }}</td>
 									<td>{{ $step->order }}</td>
-									<td width="10%"><a href="{{ url('/tours/edit-step', $step->id) }}">Edit</a></td>
+									<td width="18%">
+										<form action="{{ url('/tours/delete-step', $step->id) }}" class="submit-delete" method="post">
+											{{ csrf_field() }}
+											<div class="btn-group text-center">
+												<a href="{{ url('/tours/edit-step', $step->id) }}" class="btn btn-xs btn-link">Edit</a>
+												<button type="submit" class="btn btn-xs btn-link"><span class="text-danger">Delete</span></button>
+											</div>
+										</form>
+									</td>
 								</tr>
 							@endforeach
 						</table>
-						<a href="{{ url('/tours/destroy', $tour->id) }}" class="text-danger pull-right">x delete</a>
+						<form action="{{ url('/tours/delete', $tour->id) }}" class="submit-delete" method="post">
+							{{ csrf_field() }}
+							<button type="submit" class="btn btn-link pull-right"><span class="text-danger">x delete</span></button>
+						</form>
 					</td>
 				</tr>
 			</tbody>

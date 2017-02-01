@@ -6,7 +6,8 @@
 		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<title>Document</title>
 	<style>
 		.hidden {
@@ -21,9 +22,6 @@
 	</div>
 	<div class="col-lg-6">
 		<hr>
-		@if($errors->any())
-			<div class="alert">{{ $errors->first() }}</div>
-		@endif
 		@if(session('status'))
 			<div class="alert alert-success">
 				{{ session('status') }}
@@ -41,12 +39,17 @@
             var target = parent.find('.tour-details');
             var chevron = parent.find('i');
             target.toggleClass('hidden');
-            if(chevron.hasClass('glyphicon-menu-down')) {
+            if (chevron.hasClass('glyphicon-menu-down')) {
                 chevron.removeClass('glyphicon-menu-down');
                 chevron.addClass('glyphicon-menu-up');
-			} else {
+            } else {
                 chevron.removeClass('glyphicon-menu-up');
                 chevron.addClass('glyphicon-menu-down');
+            }
+        });
+        $('.submit-delete').on('submit', function (e) {
+            if(!confirm('Are you sure?')) {
+				return false;
 			}
         });
     });
