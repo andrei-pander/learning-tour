@@ -15,12 +15,13 @@ namespace Majesko\LearningTour\Models;
  * @property bool show_close_button
  * @property bool show_prev_button
  * @property bool show_next_button
+ * @property bool active
  * @property bool next_on_target_click
  * @property string triggers
  */
 class TourStep extends BaseModel {
 	protected $visible = ['id', 'target', 'placement', 'title', 'content', 'order', 'position',
-		'show_close_button', 'show_prev_button', 'show_next_button', 'next_on_target_click'];
+		'show_close_button', 'show_prev_button', 'show_next_button', 'next_on_target_click', 'active'];
 
 	public function rules() {
 		return [

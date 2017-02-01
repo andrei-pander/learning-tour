@@ -24,7 +24,7 @@ class LearningTourMiddleware
 
 		$result = [];
 
-		$route_action_name = class_basename($request->route()->getActionName());
+		$route_action_name = $request->route()->getActionName();
 
 		/** @var Tour[]|Collection $tours */
 		$tours = Tour::query()

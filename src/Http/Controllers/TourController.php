@@ -5,6 +5,9 @@ namespace Majesko\LearningTour\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 use Majesko\LearningTour\Models\TourStatus;
 use Majesko\LearningTour\Models\TourStep;
 use Majesko\LearningTour\Models\Tour;
@@ -21,7 +24,7 @@ class TourController extends Controller
 		$status = TourStatus::getUncompleted(Auth::user(), $tour_id);
 		$status->completeTour();
 
-		return response('');
+		return Response::json('');
 	}
 
 	/**
@@ -44,7 +47,7 @@ class TourController extends Controller
 			$status->updateStatus($step_id);
 		}
 
-		return response('');
+		return Response::json();
 	}
 
 	public function getList() {
@@ -53,58 +56,60 @@ class TourController extends Controller
 			$query->orderBy('order', 'asc');
 		}])->get();
 
-		return view('learningtour::list', ['tours' => $tours]);
+		return View::make('learningtour::list', ['tours' => $tours]);
 	}
 
 	public function getCreate() {
-		return view('learningtour::edit');
+		return View::make('learningtour::edit');
 	}
 
 	public function postCreate(Request $request) {
 		$tour = new Tour;
 
 		if( ! $tour->validate($request)) {
-			return redirect()->back()->withErrors($tour->errors());
+			return Redirect::back()->withErrors($tour->errors())->withInput();
 		}
 
 		$tour->tour_code = $request->get('tour_code');
 		$tour->name = $request->get('name');
+		$tour->active = $request->get('active');
 		$tour->save();
 
-		return redirect()->to('/tours/list')->with('status', 'Tour saved');
+		return Redirect::route('learningtour::tours.list')->with('status', 'Tour saved');
 	}
 
 	public function getEdit($id) {
 		$tour = Tour::find($id);
 
-		return view('learningtour::edit', ['tour' => $tour]);
+		return View::make('learningtour::edit', ['tour' => $tour]);
 	}
 
 	public function postDelete($id) {
 		$tour = Tour::find($id);
 		$tour->delete();
 		
-		return redirect()->back()->with('message', 'Tour deleted');
+		return Redirect::back()->with('status', 'Tour deleted');
 	}
 
 	public function postEdit(Request $request, $id) {
 		$tour = Tour::find($id);
 
 		if( ! $tour->validate($request)) {
-			return redirect()->back()->withErrors($tour->errors());
+			return Redirect::back()->withErrors($tour->errors());
 		}
 
 		$tour->name = $request->get('name');
 		$tour->tour_code = $request->get('tour_code');
+		$tour->active = $request->get('active');
 		$tour->save();
 
-		return redirect()->to('/tours/list')->with('status', 'Tour updated');
+		return Redirect::route('learningtour::tours.list')->with('status', 'Tour updated');
 	}
 
 	public function getCreateStep($tour_id) {
 		$tour = Tour::find($tour_id);
 
-		return view('learningtour::edit-step', ['tour' => $tour]);
+		return View::make('learningtour::edit-step', ['tour' => $tour]);
 	}
 
 	public function postCreateStep(Request $request) {
@@ -112,7 +117,7 @@ class TourController extends Controller
 		$step = new TourStep();
 
 		if(!$step->validate($request)) {
-			return redirect()->back()->withErrors($step->errors());
+			return Redirect::back()->withErrors($step->errors())->withInput();
 		}
 
 		$step->title = $request->get('title');
@@ -122,11 +127,12 @@ class TourController extends Controller
 		$step->show_close_button = $request->get('show_close_button');
 		$step->show_prev_button = $request->get('show_prev_button');
 		$step->show_next_button = $request->get('show_next_button');
+		$step->active = $request->get('active');
 		$step->order = $request->get('order');
 		$step->route = $request->get('route');
 		$tour->steps()->save($step);
 
-		return redirect()->to('/tours/list')->with('message', 'Step created');
+		return Redirect::route('learningtour::tours.list')->with('status', 'Step created');
 	}
 
 	public function getEditStep($id) {
@@ -139,7 +145,7 @@ class TourController extends Controller
 		$step = TourStep::find($id);
 
 		if( ! $step->validate($request)) {
-			return redirect()->back()->withErrors($step->errors());
+			return Redirect::back()->withErrors($step->errors());
 		}
 
 		$step->title = $request->get('title');
@@ -149,17 +155,18 @@ class TourController extends Controller
 		$step->show_close_button = $request->get('show_close_button');
 		$step->show_prev_button = $request->get('show_prev_button');
 		$step->show_next_button = $request->get('show_next_button');
+		$step->active = $request->get('active');
 		$step->order = $request->get('order');
 		$step->route = $request->get('route');
 		$step->save();
 
-		return redirect()->to('/tours/list')->with('message', 'Step updated');
+		return Redirect::route('learningtour::tours.list')->with('status', 'Step updated');
 	}
 
 	public function postDeleteStep($id) {
 		$step = TourStep::find($id);
 		$step->delete();
 
-		return redirect()->back()->with('message', 'Step deleted');
+		return Redirect::back()->with('status', 'Step deleted');
 	}
 }

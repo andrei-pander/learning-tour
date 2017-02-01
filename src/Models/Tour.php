@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property int id
  * @property string tour_code
  * @property string name
+ * @property bool active
  * @property string triggers
  *
  * @property TourStep[]|Collection steps
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class Tour extends BaseModel {
 	protected $visible = [
-		'tour_code', 'name', 'triggers'
+		'tour_code', 'name', 'active', 'triggers'
 	];
 
 	protected function rules() {
