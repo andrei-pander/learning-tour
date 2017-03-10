@@ -1,8 +1,10 @@
 <?php
 
 return [
+	/*
+	 * Routes for learningtour
+	 */
 	'routes' => [
-		'fetch_path' => '/tours/tour',
 		'update_path' => '/tours/update-step',
 		'complete_path' => '/tours/complete'
 	]

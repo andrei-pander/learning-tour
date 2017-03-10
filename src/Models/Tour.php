@@ -3,6 +3,7 @@
 namespace Majesko\LearningTour\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Route;
 
 /**
  * @property int id

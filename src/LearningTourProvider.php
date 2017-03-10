@@ -14,15 +14,11 @@ class LearningTourProvider extends ServiceProvider
 	public function boot() {
 		$this->publishes([
 			__DIR__.'/config/learningtour.php' => config_path('learningtour.php'),
-		]);
+		], 'config');
 		$this->publishes([
 			__DIR__ . '/database/migrations' => database_path('migrations')
 		], 'migrations');
 		$this->loadViewsFrom(__DIR__ . '/views', 'learningtour');
-
-		if ( ! app()->routesAreCached()) {
-			require __DIR__ . '/Http/routes.php';
-		}
 	}
 
 	/**

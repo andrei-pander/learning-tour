@@ -40,7 +40,7 @@ class TourController extends Controller
 
 		$status = TourStatus::getUncompleted(Auth::user(), $tour->id);
 
-		if ( ! $status) {
+		if( ! $status) {
 			(new TourStatus())->createStatus(Auth::user(), $tour, $step_id);
 		}
 		else {
@@ -87,7 +87,7 @@ class TourController extends Controller
 	public function postDelete($id) {
 		$tour = Tour::find($id);
 		$tour->delete();
-		
+
 		return Redirect::back()->with('status', 'Tour deleted');
 	}
 
@@ -116,7 +116,7 @@ class TourController extends Controller
 		$tour = Tour::find($request->get('tour_id'));
 		$step = new TourStep();
 
-		if(!$step->validate($request)) {
+		if( ! $step->validate($request)) {
 			return Redirect::back()->withErrors($step->errors())->withInput();
 		}
 

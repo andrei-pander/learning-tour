@@ -5,7 +5,6 @@ var learningTour = (function () {
         counter: 0,
         currentTour: '',
         toursData: [],
-        fetchToursPath: '/tours/tour',
         updateStepPath: '/tours/update-step',
         completeTourPath: '/tours/complete'
     };
@@ -94,7 +93,6 @@ var learningTour = (function () {
     function _initConfig(params) {
         config.csrf = params.csrf;
         config.deferred = params.deferred;
-        config.fetchToursPath = params.fetchToursPath;
         config.updateStepPath = params.updateStepPath;
         config.completeTourPath = params.completeTourPath;
         _formatTours(params.tours);
