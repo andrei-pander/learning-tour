@@ -36,7 +36,7 @@ class CreateTourStatuses extends Migration {
 				->references('id')
 				->on('tour_steps')
 				->onDelete('restrict')
-				->onDelete('restrict');
+				->onUpdate('restrict');
 		});
 	}
 

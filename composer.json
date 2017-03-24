@@ -1,6 +1,6 @@
 {
     "name": "majesko/learningtour",
-    "description": "wrapper for linkedin hopscotch for laravel projects",
+    "description": "Linkedin hopscotch wrapper package for laravel projects",
     "type": "project",
     "license": "MIT",
     "require": {
