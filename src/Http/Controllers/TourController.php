@@ -75,27 +75,27 @@ class TourController extends Controller
 		$tour->active = $request->get('active');
 		$tour->save();
 
-		return Redirect::route('learningtour::tours.list')->with('status', 'Tour saved');
+		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.tour.created'));
 	}
 
 	public function getEdit($id) {
-		$tour = Tour::find($id);
+		$tour = Tour::findOrFail($id);
 
 		return View::make('learningtour::edit', ['tour' => $tour]);
 	}
 
 	public function postDelete($id) {
-		$tour = Tour::find($id);
+		$tour = Tour::findOrFail($id);
 		$tour->delete();
 
-		return Redirect::back()->with('status', 'Tour deleted');
+		return Redirect::back()->with('status', trans('learningtour::admin.tour.deleted'));
 	}
 
 	public function postEdit(Request $request, $id) {
-		$tour = Tour::find($id);
+		$tour = Tour::findOrFail($id);
 
 		if( ! $tour->validate($request)) {
-			return Redirect::back()->withErrors($tour->errors());
+			return Redirect::back()->withErrors($tour->errors())->withInput();
 		}
 
 		$tour->name = $request->get('name');
@@ -103,17 +103,17 @@ class TourController extends Controller
 		$tour->active = $request->get('active');
 		$tour->save();
 
-		return Redirect::route('learningtour::tours.list')->with('status', 'Tour updated');
+		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.tour.updated'));
 	}
 
 	public function getCreateStep($tour_id) {
-		$tour = Tour::find($tour_id);
+		$tour = Tour::findOrFail($tour_id);
 
 		return View::make('learningtour::edit-step', ['tour' => $tour]);
 	}
 
 	public function postCreateStep(Request $request) {
-		$tour = Tour::find($request->get('tour_id'));
+		$tour = Tour::findOrFail($request->get('tour_id'));
 		$step = new TourStep();
 
 		if( ! $step->validate($request)) {
@@ -132,17 +132,17 @@ class TourController extends Controller
 		$step->route = $request->get('route');
 		$tour->steps()->save($step);
 
-		return Redirect::route('learningtour::tours.list')->with('status', 'Step created');
+		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.step.created'));
 	}
 
 	public function getEditStep($id) {
-		$step = TourStep::find($id);
+		$step = TourStep::findOrFail($id);
 
 		return view('learningtour::list-steps', ['step' => $step]);
 	}
 
 	public function postEditStep(Request $request, $id) {
-		$step = TourStep::find($id);
+		$step = TourStep::findOrFail($id);
 
 		if( ! $step->validate($request)) {
 			return Redirect::back()->withErrors($step->errors());
@@ -160,13 +160,13 @@ class TourController extends Controller
 		$step->route = $request->get('route');
 		$step->save();
 
-		return Redirect::route('learningtour::tours.list')->with('status', 'Step updated');
+		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.step.updated'));
 	}
 
 	public function postDeleteStep($id) {
-		$step = TourStep::find($id);
+		$step = TourStep::findOrFail($id);
 		$step->delete();
 
-		return Redirect::back()->with('status', 'Step deleted');
+		return Redirect::back()->with('status', trans('learningtour::admin.step.deleted'));
 	}
 }

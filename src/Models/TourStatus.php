@@ -2,7 +2,6 @@
 
 namespace Majesko\LearningTour\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
@@ -13,7 +12,9 @@ use Carbon\Carbon;
  * @property int step_id
  * @property int step
  * @property string completed_at
- * @property Tour[]|Collection tour
+ *
+ * @property Tour|Model tour
+ * @see TourStatus::tour()
  */
 class TourStatus extends Model {
 	protected $fillable = ['tour_id', 'user_id', 'step_id', 'step', 'completed_at'];
@@ -43,15 +44,14 @@ class TourStatus extends Model {
 	/**
 	 * Updates tour status to next or previous step
 	 *
-	 * @param $step_id
+	 * @param int $step_id
 	 *
 	 * @return bool
 	 */
 	public function updateStatus($step_id) {
 		$this->step_id = $step_id;
-		$this->save();
 
-		return true;
+		return $this->save();
 	}
 
 	/**
@@ -61,9 +61,8 @@ class TourStatus extends Model {
 	 */
 	public function completeTour() {
 		$this->completed_at = Carbon::now();
-		$this->save();
 
-		return true;
+		return $this->save();
 	}
 
 	/**
@@ -77,7 +76,7 @@ class TourStatus extends Model {
 	public static function getUncompleted(Model $user, $tour_id) {
 		return static::query()
 			->where('tour_id', $tour_id)
-			->where('user_id', $user->getkey())
+			->where('user_id', $user->getKey())
 			->whereNull('completed_at')
 			->first();
 	}

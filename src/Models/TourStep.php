@@ -1,6 +1,7 @@
 <?php
 
 namespace Majesko\LearningTour\Models;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int id
@@ -18,6 +19,9 @@ namespace Majesko\LearningTour\Models;
  * @property bool active
  * @property bool next_on_target_click
  * @property string triggers
+ *
+ * @property Tour|Model tour
+ * @see TourStep::tour()
  */
 class TourStep extends BaseModel {
 	protected $visible = ['id', 'target', 'placement', 'title', 'content', 'order', 'position',

@@ -21,6 +21,6 @@
   ],
   "dependencies": {
     "jquery": "1.11.*",
-    "hopscotch": "^0.2.6"
+    "hopscotch": "~0.2.6"
   }
 }

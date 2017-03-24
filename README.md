@@ -36,9 +36,9 @@ Route::group(['prefix' => 'tours'], function () {
     Route::get('create', '\Majesko\LearningTour\Http\Controllers\TourController@getCreate')->name('learningtour::tours.create');
     Route::get('edit/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@getEdit')->name('learningtour::tours.edit');
     Route::post('create', '\Majesko\LearningTour\Http\Controllers\TourController@postCreate')->name('learningtour::tours.store');
-    Route::post('edit', '\Majesko\LearningTour\Http\Controllers\TourController@postEdit')->name('learningtour::tours.update');
+    Route::post('edit/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@postEdit')->name('learningtour::tours.update');
     Route::post('delete/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@postDelete')->name('learningtour::tours.delete');
-    Route::get('create-step', '\Majesko\LearningTour\Http\Controllers\TourController@getCreateStep')->name('learningtour::tours.create-step');
+    Route::get('create-step/{tour_id}', '\Majesko\LearningTour\Http\Controllers\TourController@getCreateStep')->name('learningtour::tours.create-step');
     Route::get('edit-step/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@getEditStep')->name('learningtour::tours.edit-step');
     Route::post('create-step', '\Majesko\LearningTour\Http\Controllers\TourController@postCreateStep')->name('learningtour::tours.store-step');
     Route::post('edit-step', '\Majesko\LearningTour\Http\Controllers\TourController@postEditStep')->name('learningtour::tours.update-step');
@@ -48,8 +48,8 @@ Route::group(['prefix' => 'tours'], function () {
 Подключить скрипты и стили (в gulpfile или шаблон)
 
 ```
-vendor/majesko/learning-tour/src/assets/css/learningtour.css'
-vendor/majesko/learning-tour/src/assets/js/learningtour.js'
+vendor/majesko/learning-tour/src/resources/assets/css/learningtour.css'
+vendor/majesko/learning-tour/src/resources/assets/js/learningtour.js'
 ```
 
 Подключить в шаблон скрипты

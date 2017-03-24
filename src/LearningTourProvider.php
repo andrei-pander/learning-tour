@@ -18,7 +18,8 @@ class LearningTourProvider extends ServiceProvider
 		$this->publishes([
 			__DIR__ . '/database/migrations' => database_path('migrations')
 		], 'migrations');
-		$this->loadViewsFrom(__DIR__ . '/views', 'learningtour');
+		$this->loadViewsFrom(__DIR__ . '/resources/views', 'learningtour');
+		$this->loadTranslationsFrom(__DIR__.'/resources/lang', 'learningtour');
 	}
 
 	/**
