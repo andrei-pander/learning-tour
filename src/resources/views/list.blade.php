@@ -32,7 +32,7 @@
 								</tr>
 							@endforeach
 						</table>
-						<form action="{{ route('learningtour::tours.delete', $step->id) }}" class="submit-delete" method="post">
+						<form action="{{ route('learningtour::tours.delete', $tour->id) }}" class="submit-delete" method="post">
 							{{ csrf_field() }}
 							<button type="submit" class="btn btn-link pull-right"><span class="text-danger">x {{ trans('learningtour::admin.delete') }}</span></button>
 						</form>

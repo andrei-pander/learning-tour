@@ -41,7 +41,7 @@ Route::group(['prefix' => 'tours'], function () {
     Route::get('create-step/{tour_id}', '\Majesko\LearningTour\Http\Controllers\TourController@getCreateStep')->name('learningtour::tours.create-step');
     Route::get('edit-step/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@getEditStep')->name('learningtour::tours.edit-step');
     Route::post('create-step', '\Majesko\LearningTour\Http\Controllers\TourController@postCreateStep')->name('learningtour::tours.store-step');
-    Route::post('edit-step', '\Majesko\LearningTour\Http\Controllers\TourController@postEditStep')->name('learningtour::tours.update-step');
+    Route::post('edit-step/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@postEditStep')->name('learningtour::tours.update-step');
     Route::post('delete-step/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@postDeleteStep')->name('learningtour::tours.delete-step');
 });
 ```
