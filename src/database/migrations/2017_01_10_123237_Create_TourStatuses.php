@@ -15,7 +15,7 @@ class CreateTourStatuses extends Migration {
 		Schema::create($this->table, function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('tour_id')->unsigned();
-			$table->integer('user_id')->unsigned();
+			$table->integer('user_id');
 			$table->integer('step_id')->unsigned();
 			$table->timestamp('completed_at')->nullable();
 			$table->timestamps();
