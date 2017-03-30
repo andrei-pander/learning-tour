@@ -1,11 +1,11 @@
 <script>
     $(document).ready(function () {
         var language = {
-            nextBtn: "Далее",
-            prevBtn: "Назад",
-            doneBtn: "Готово",
-            skipBtn: "Пропустить",
-            closeTooltip: "Закрыть"
+            nextBtn: "{{ trans('learningtour::buttons.next') }}",
+            prevBtn: "{{ trans('learningtour::buttons.prev') }}",
+            doneBtn: "{{ trans('learningtour::buttons.finish') }}",
+            skipBtn: "{{ trans('learningtour::buttons.skip') }}",
+            closeTooltip: "{{ trans('learningtour::buttons.close') }}"
         };
         hopscotch.configure({i18n: language});
         var config = {

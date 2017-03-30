@@ -4,6 +4,7 @@ namespace Majesko\LearningTour\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 /**
  * @property int id
@@ -79,5 +80,13 @@ class TourStatus extends Model {
 			->where('user_id', $user->getKey())
 			->whereNull('completed_at')
 			->first();
+	}
+
+	public static function countCompleted(Model $user, $tour_id) {
+		return static::query()
+			->where('tour_id', $tour_id)
+			->where('user_id', $user->getKey())
+			->whereNotNull('completed_at')
+			->count();
 	}
 }

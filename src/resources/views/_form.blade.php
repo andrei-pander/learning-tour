@@ -27,6 +27,12 @@
 		<input type="checkbox" name="active" value="1" @if(isset($tour) && $tour->active || old('active')) checked @endif>
 	</div>
 
+	<div class="form-group">
+		<label for="active">{{ trans('learningtour::admin.fields.tour.autostart') }}</label>
+		<input type="hidden" name="active" value="0">
+		<input type="checkbox" name="active" value="1" @if(isset($tour) && $tour->autostart || old('autostart')) checked @endif>
+	</div>
+
 	<button type="submit" class="btn btn-primary">{{ trans('learningtour::admin.save') }}</button>
 	<a href="{{ route('learningtour::tours.list') }}" class="btn btn-default">{{ trans('learningtour::admin.back') }}</a>
 </form>

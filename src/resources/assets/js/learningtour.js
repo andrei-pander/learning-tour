@@ -5,6 +5,7 @@ var learningTour = (function () {
         counter: 0,
         currentTour: '',
         toursData: [],
+        autostart: false,
         updateStepPath: '/tours/update-step',
         completeTourPath: '/tours/complete'
     };
@@ -95,14 +96,21 @@ var learningTour = (function () {
         config.deferred = params.deferred;
         config.updateStepPath = params.updateStepPath;
         config.completeTourPath = params.completeTourPath;
+        config.autostart = params.autostart;
         _formatTours(params.tours);
     }
 
     function _initHopscotch() {
         config.currentTour = config.toursData[config.tours[config.counter]];
-        if( ! config.deferred || ! config.currentTour.completed) {
+
+        if (config.currentTour.autostart == 1) {
+            if(config.currentTour.completed == 0) {
+                _startHopcotch(config.currentTour);
+            }
+        } else if (config.currentTour.completed == 0) {
             _startHopcotch(config.currentTour);
         }
+
         _buildMenu(config.toursData);
     }
 
@@ -122,6 +130,7 @@ var learningTour = (function () {
                         'placement': step.placement,
                         'showCloseButton': step.show_close_button,
                         'showPrevButton': step.show_prev_button,
+                        'showNextButton': step.show_next_button,
                         'nextOnTragetClick': step.next_on_target_click
                     }
                 });

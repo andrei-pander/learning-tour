@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
  * @property string tour_code
  * @property string name
  * @property bool active
+ * @property bool autostart
  * @property string triggers
  *
  * @property TourStep[]|Collection steps

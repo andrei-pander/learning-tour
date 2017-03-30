@@ -5,6 +5,7 @@ namespace Majesko\LearningTour\Http\Middleware;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Majesko\LearningTour\Models\Tour;
 use Majesko\LearningTour\Models\TourStatus;
 
@@ -41,7 +42,19 @@ class LearningTourMiddleware
 			/** @var TourStatus $status */
 			$status = TourStatus::getUncompleted(Auth::user(), $tour->id);
 			$currentStep = 0;
-			$completed = 0;
+
+			/*
+			 * TODO: refactor this shit
+			 */
+			if($tour->autostart) {
+				if(TourStatus::countCompleted(Auth::user(), $tour->id) > 0) {
+					$completed = 1;
+				} else {
+					$completed = 0;
+				}
+			} else {
+				$completed = 1;
+			}
 
 			if ($status) {
 				/*
@@ -72,16 +85,17 @@ class LearningTourMiddleware
 			}
 
 			/*
-			 * If tour already completed by user, mark it as completed
+			 * If has uncompleted tour set completed to 0;
 			 */
 			if (TourStatus::query()
 				->where('user_id', Auth::id())
 				->where('tour_id', $tour->id)
-				->whereNotNull('completed_at')
+				->whereNull('completed_at')
 				->count()
 			) {
-				$completed = 1;
+				$completed = 0;
 			}
+
 
 			$result[$key] = [
 				$tour->tour_code => [
@@ -90,7 +104,8 @@ class LearningTourMiddleware
 					'steps' => $tour->steps,
 					'step' => $currentStep,
 					'base_id' => $tour->id,
-					'completed' => $completed
+					'completed' => $completed,
+					'autostart' => $tour->autostart
 				]
 			];
 		}
