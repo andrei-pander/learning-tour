@@ -29,8 +29,8 @@
 
 	<div class="form-group">
 		<label for="active">{{ trans('learningtour::admin.fields.tour.autostart') }}</label>
-		<input type="hidden" name="active" value="0">
-		<input type="checkbox" name="active" value="1" @if(isset($tour) && $tour->autostart || old('autostart')) checked @endif>
+		<input type="hidden" name="autostart" value="0">
+		<input type="checkbox" name="autostart" value="1" @if(isset($tour) && $tour->autostart || old('autostart')) checked @endif>
 	</div>
 
 	<button type="submit" class="btn btn-primary">{{ trans('learningtour::admin.save') }}</button>

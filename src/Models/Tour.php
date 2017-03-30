@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
  */
 class Tour extends BaseModel {
 	protected $visible = [
-		'tour_code', 'name', 'active', 'triggers'
+		'tour_code', 'name', 'active', 'triggers', 'autostart'
 	];
 
 	protected function rules() {

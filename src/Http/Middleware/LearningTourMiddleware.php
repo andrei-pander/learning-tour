@@ -29,12 +29,12 @@ class LearningTourMiddleware
 
 		/** @var Tour[]|Collection $tours */
 		$tours = Tour::query()
-			->with([
-				'steps' => function ($query) use ($route_action_name) {
-					$query->orderBy('order', 'asc')
-						->where('active', 1)
-						->where('route', $route_action_name);
-				}])
+			->with('steps')
+			->whereHas('steps', function ($query) use ($route_action_name) {
+				$query->orderBy('order', 'asc')
+					->where('active', 1)
+					->where('route', $route_action_name);
+			})
 			->where('active', 1)
 			->get();
 
