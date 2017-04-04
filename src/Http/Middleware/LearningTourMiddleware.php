@@ -29,12 +29,16 @@ class LearningTourMiddleware
 
 		/** @var Tour[]|Collection $tours */
 		$tours = Tour::query()
-			->with('steps')
 			->whereHas('steps', function ($query) use ($route_action_name) {
 				$query->orderBy('order', 'asc')
 					->where('active', 1)
 					->where('route', $route_action_name);
 			})
+			->with(['steps' => function($query) use ($route_action_name) {
+				$query->orderBy('order', 'asc')
+					->where('active', 1)
+					->where('route', $route_action_name);
+			}])
 			->where('active', 1)
 			->get();
 
@@ -43,20 +47,8 @@ class LearningTourMiddleware
 			$status = TourStatus::getUncompleted(Auth::user(), $tour->id);
 			$currentStep = 0;
 
-			/*
-			 * TODO: refactor this shit
-			 */
-			if($tour->autostart) {
-				if(TourStatus::countCompleted(Auth::user(), $tour->id) > 0) {
-					$completed = 1;
-				} else {
-					$completed = 0;
-				}
-			} else {
-				$completed = 1;
-			}
-
 			if ($status) {
+				$completed = 0;
 				/*
 				 * If tour step in active state set it, else get first next active step
 				 * */
@@ -83,19 +75,14 @@ class LearningTourMiddleware
 					}
 				}
 			}
-
-			/*
-			 * If has uncompleted tour set completed to 0;
-			 */
-			if (TourStatus::query()
-				->where('user_id', Auth::id())
-				->where('tour_id', $tour->id)
-				->whereNull('completed_at')
-				->count()
-			) {
-				$completed = 0;
+			else {
+				if($tour->autostart) {
+					$completed = TourStatus::countCompleted(Auth::user(), $tour->id) > 0 ?
+						1 : 0;
+				} else {
+					$completed = 1;
+				}
 			}
-
 
 			$result[$key] = [
 				$tour->tour_code => [
@@ -105,7 +92,7 @@ class LearningTourMiddleware
 					'step' => $currentStep,
 					'base_id' => $tour->id,
 					'completed' => $completed,
-					'autostart' => $tour->autostart
+					'autostart' => $tour->autostart,
 				]
 			];
 		}

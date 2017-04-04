@@ -60,7 +60,7 @@ var learningTour = (function () {
 
         hopscotch.listen('end', function () {
             _completeTour();
-            if (!config.deferred) {
+            // if ( ! config.deferred) {
                 config.counter++;
                 if (config.counter < config.tours.length) {
                     config.currentTour = config.toursData[config.tours[config.counter]];
@@ -71,9 +71,9 @@ var learningTour = (function () {
                     _clearOverlays();
                     _removeListeners();
                 }
-            } else {
-                _clearOverlays();
-            }
+            // } else {
+            //     _clearOverlays();
+            // }
         });
 
         hopscotch.listen('show', function () {

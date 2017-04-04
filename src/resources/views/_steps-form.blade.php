@@ -94,6 +94,14 @@
 				<input type="checkbox" name="active" value="1" @if(isset($step) && $step->active || old('active')) checked @endif>
 			</div>
 		</div>
+
+		<div class="col-lg-4">
+			<div class="form-group">
+				<label for="active">{{ trans('learningtour::admin.fields.step.next_on_target_click') }}</label>
+				<input type="hidden" name="active" value="0">
+				<input type="checkbox" name="active" value="1" @if(isset($step) && $step->next_on_target_click || old('next_on_target_click')) checked @endif>
+			</div>
+		</div>
 	</div>
 
 	<div class="form-group">
