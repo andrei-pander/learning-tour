@@ -14,7 +14,7 @@ class UpdateTourStepDropTriggers extends Migration {
 	 */
 	public function up() {
 		Schema::table($this->table, function (Blueprint $table) {
-			$table->dropColumn('autostart');
+			$table->dropColumn('triggers');
 		});
 	}
 

@@ -12,7 +12,7 @@ class AddAutostartToTours extends Migration {
 	 */
 	public function up() {
 		Schema::table($this->table, function (Blueprint $table) {
-			$table->boolean('autostart')->default(false);
+			$table->boolean('autostart')->after('active')->default(false);
 		});
 	}
 
@@ -23,7 +23,7 @@ class AddAutostartToTours extends Migration {
 	 */
 	public function down() {
 		Schema::table($this->table, function (Blueprint $table) {
-			$table->drop('autostart');
+			$table->dropColumn('autostart');
 		});
 	}
 }
