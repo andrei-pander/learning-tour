@@ -95,7 +95,7 @@ var learningTour = (function () {
     function _initHopscotch() {
         config.currentTour = config.toursData[config.tours[config.counter]];
 
-        if (config.currentTour && config.currentTour.completed == 0) {
+        if (config.currentTour && ! config.currentTour.completed) {
             _startHopcotch(config.currentTour);
         }
 
