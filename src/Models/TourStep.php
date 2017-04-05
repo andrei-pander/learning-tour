@@ -1,7 +1,6 @@
 <?php
 
 namespace Majesko\LearningTour\Models;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int id
@@ -18,9 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool show_next_button
  * @property bool active
  * @property bool next_on_target_click
- * @property bool multistep
+ * @property bool multipage
  *
- * @property Tour|Model tour
+ * @property Tour tour
  * @see TourStep::tour()
  */
 class TourStep extends BaseModel {

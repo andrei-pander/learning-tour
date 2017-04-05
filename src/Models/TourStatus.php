@@ -10,14 +10,15 @@ use Carbon\Carbon;
  * @property int tour_id
  * @property int user_id
  * @property int step_id
- * @property int step
  * @property string completed_at
  *
- * @property Tour|Model tour
+ * @property Tour tour
  * @see TourStatus::tour()
+ * @property TourStep step
+ * @see TourStatus::step()
  */
 class TourStatus extends Model {
-	protected $fillable = ['tour_id', 'user_id', 'step_id', 'step', 'completed_at'];
+	protected $visible = ['tour_id', 'user_id', 'step_id', 'completed_at'];
 
 	public function tour() {
 		return $this->belongsTo(Tour::class);
