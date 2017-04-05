@@ -41,24 +41,38 @@ class LearningTourMiddleware
 
 		foreach ($tours as $key => $tour) {
 			/** @var TourStatus $status */
-			$status = TourStatus::getUncompleted(Auth::user(), $tour->id);
+			$uncompletedTourStatus = TourStatus::getUncompleted(Auth::user(), $tour->id);
+			$completedToursCount = TourStatus::countCompleted(Auth::user(), $tour->id);
 			$currentStep = 0;
 
-			if ($status) {
+
+
+			if($uncompletedTourStatus) {
 				$completed = 0;
+			}
+			else {
+				if ($tour->autostart) {
+					$completed = $completedToursCount > 0 ? 1 : 0;
+				}
+				else {
+					$completed = 1;
+				}
+			}
+
+			if ($uncompletedTourStatus) {
 				/*
 				 * If tour step in active state set it, else get first next active step
 				 * */
-				if ($tour->steps->contains('id', $status->step_id)) {
+				if ($tour->steps->contains('id', $uncompletedTourStatus->step_id)) {
 					foreach ($tour->steps as $num => $step) {
-						if ($step->id == $status->step_id) {
+						if ($step->id == $uncompletedTourStatus->step_id) {
 							$currentStep = $num;
 						}
 					}
 				}
 				else {
-					$nextStep = $tour->steps->filter(function ($item) use ($status) {
-						return $item->id > $status->step_id;
+					$nextStep = $tour->steps->filter(function ($item) use ($uncompletedTourStatus) {
+						return $item->id > $uncompletedTourStatus->step_id;
 					})->first();
 					if ( ! $nextStep) {
 						$status->completeTour(Auth::user());
@@ -72,14 +86,7 @@ class LearningTourMiddleware
 					}
 				}
 			}
-			else {
-				if($tour->autostart) {
-					$completed = TourStatus::countCompleted(Auth::user(), $tour->id) > 0 ?
-						1 : 0;
-				} else {
-					$completed = 1;
-				}
-			}
+
 
 			$result[$key] = [
 				$tour->tour_code => [

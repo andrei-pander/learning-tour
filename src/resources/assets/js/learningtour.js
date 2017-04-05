@@ -24,6 +24,10 @@ var learningTour = (function () {
             var targetEl = $(target);
             var helper = $('.helper');
 
+            targetEl.on('click', function () {
+                hopscotch.nextStep();
+            });
+
             if(prev) {
                 $('#'+prev).removeClass('overlay-relative');
             }
@@ -65,6 +69,9 @@ var learningTour = (function () {
 
         hopscotch.listen('show', function () {
             _updateTourStatus();
+        });
+        hopscotch.listen('close', function () {
+            _clearOverlays();
         });
     }
 
@@ -148,7 +155,7 @@ var learningTour = (function () {
 
     function _startHopcotch(data) {
         hopscotch.configure({cookieName: 'hopscotch.' + data.id});
-        hopscotch.startTour(data);
+        hopscotch.startTour(data, data.step);
     }
 
     /*
