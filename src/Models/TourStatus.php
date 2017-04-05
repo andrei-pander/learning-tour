@@ -4,7 +4,6 @@ namespace Majesko\LearningTour\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use PhpParser\Node\Expr\AssignOp\Mod;
 
 /**
  * @property int id

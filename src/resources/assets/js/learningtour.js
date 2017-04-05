@@ -52,7 +52,7 @@ var learningTour = (function () {
         });
 
         hopscotch.listen('start', function () {
-            if (!$('.overlay').length) {
+            if ( ! $('.overlay').length) {
                 $('body').append('<div class="overlay"></div>');
             }
         });
@@ -88,7 +88,7 @@ var learningTour = (function () {
     function _initHopscotch() {
         config.currentTour = config.toursData[config.tours[config.counter]];
 
-        if(config.currentTour.completed == 0) {
+        if (config.currentTour.completed == 0) {
             _startHopcotch(config.currentTour);
         }
 

@@ -97,6 +97,14 @@
 
 		<div class="col-lg-4">
 			<div class="form-group">
+				<label for="active">{{ trans('learningtour::admin.fields.step.multipage') }}</label>
+				<input type="hidden" name="multipage" value="0">
+				<input type="checkbox" name="multipage" value="1" @if(isset($step) && $step->active || old('multipage')) checked @endif>
+			</div>
+		</div>
+
+		<div class="col-lg-4">
+			<div class="form-group">
 				<label for="active">{{ trans('learningtour::admin.fields.step.next_on_target_click') }}</label>
 				<input type="hidden" name="next_on_target_click" value="0">
 				<input type="checkbox" name="next_on_target_click" value="1" @if(isset($step) && $step->next_on_target_click || old('next_on_target_click')) checked @endif>

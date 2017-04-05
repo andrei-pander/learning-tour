@@ -11,14 +11,13 @@ use Illuminate\Support\Facades\Route;
  * @property string name
  * @property bool active
  * @property bool autostart
- * @property string triggers
  *
  * @property TourStep[]|Collection steps
  * @see Tour::steps()
  */
 class Tour extends BaseModel {
 	protected $visible = [
-		'tour_code', 'name', 'active', 'triggers', 'autostart',
+		'tour_code', 'name', 'active', 'autostart',
 	];
 
 	protected function rules() {

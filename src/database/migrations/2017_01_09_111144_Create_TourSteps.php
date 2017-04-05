@@ -26,7 +26,6 @@ class CreateTourSteps extends Migration {
 			$table->string('route');
 			$table->integer('order')->unsigned();
 			$table->boolean('active')->default(false);
-			$table->text('triggers')->nullable();
 			$table->timestamps();
 
 			$table->foreign('tour_id')

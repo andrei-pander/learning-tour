@@ -17,7 +17,6 @@ class CreateTours extends Migration {
 			$table->string('tour_code')->unique();
 			$table->string('name');
 			$table->boolean('active')->default(false);
-			$table->text('triggers')->nullable();
 			$table->timestamps();
 		});
 	}
