@@ -5,9 +5,9 @@ namespace Majesko\LearningTour\Http\Middleware;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Majesko\LearningTour\Models\Tour;
 use Majesko\LearningTour\Models\TourStatus;
+use Majesko\LearningTour\Models\TourStep;
 
 class LearningTourMiddleware
 {
@@ -30,7 +30,8 @@ class LearningTourMiddleware
 		/** @var Tour[]|Collection $tours */
 		$tours = Tour::query()
 			->with(['steps' => function($query) {
-				$query->orderBy('order', 'asc');
+				$query->where('active', 1)
+					->orderBy('order', 'asc');
 			}])
 			->whereHas('steps', function ($query) use ($route_action_name) {
 				$query->where('active', 1)
@@ -40,7 +41,6 @@ class LearningTourMiddleware
 			->get();
 
 		foreach ($tours as $key => $tour) {
-			/** @var TourStatus $status */
 			$uncompletedTourStatus = TourStatus::getUncompleted(Auth::user(), $tour->id);
 			$completed_tours_count = TourStatus::countCompleted(Auth::user(), $tour->id);
 			$currentStep = 0;
@@ -64,11 +64,12 @@ class LearningTourMiddleware
 					}
 				}
 				else {
-					$nextStep = $tour->steps->filter(function ($item) use ($uncompletedTourStatus) {
-						return $item->order > $uncompletedTourStatus->step->order;
-					})->first();
+					$nextStep = $tour->steps
+						->first(function ($useless_key, TourStep $item) use ($uncompletedTourStatus) {
+							return $item->order > $uncompletedTourStatus->step->order;
+						});
 					if ( ! $nextStep) {
-						$status->completeTour(Auth::user());
+						$uncompletedTourStatus->completeTour(Auth::user());
 					}
 					else {
 						foreach ($tour->steps as $num => $step) {
