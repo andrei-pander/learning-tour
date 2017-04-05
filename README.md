@@ -2,6 +2,9 @@
 *Learning tour for  Laravel projects (5.1+), based on Hopscotch learning tour (https://github.com/linkedin/hopscotch)*
 
 ## Installation steps
+Подключить библиотеку hopscotch в проект
+
+
 Добавить пакет в composer.json
 
 Выполнить composer update.

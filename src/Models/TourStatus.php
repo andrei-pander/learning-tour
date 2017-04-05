@@ -23,6 +23,10 @@ class TourStatus extends Model {
 		return $this->belongsTo(Tour::class);
 	}
 
+	public function step() {
+		return $this->belongsTo(TourStep::class);
+	}
+
 	/**
 	 * Creates new initial status;
 	 *

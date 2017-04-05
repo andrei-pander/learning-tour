@@ -24,9 +24,9 @@ var learningTour = (function () {
             var targetEl = $(target);
             var helper = $('.helper');
 
-            targetEl.on('click', function () {
-                hopscotch.nextStep();
-            });
+            // targetEl.on('click', function () {
+            //     hopscotch.nextStep();
+            // });
 
             if(prev) {
                 $('#'+prev).removeClass('overlay-relative');
@@ -119,7 +119,7 @@ var learningTour = (function () {
                         'showCloseButton': step.show_close_button,
                         'showPrevButton': step.show_prev_button,
                         'showNextButton': step.show_next_button,
-                        'nextOnTragetClick': step.next_on_target_click,
+                        'nextOnTargetClick': step.next_on_target_click,
                         'multipage': step.multipage
                     }
                 });

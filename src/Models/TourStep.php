@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool show_next_button
  * @property bool active
  * @property bool next_on_target_click
+ * @property bool multistep
  *
  * @property Tour|Model tour
  * @see TourStep::tour()
