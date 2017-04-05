@@ -19,7 +19,6 @@ class CreateTourSteps extends Migration {
 			$table->text('content');
 			$table->string('target');
 			$table->string('placement');
-			$table->boolean('show_close_button')->default(true);
 			$table->boolean('show_prev_button')->default(false);
 			$table->boolean('show_next_button')->default(true);
 			$table->boolean('next_on_target_click')->default(false);

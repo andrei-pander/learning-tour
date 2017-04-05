@@ -116,7 +116,6 @@ var learningTour = (function () {
                         'content': step.content,
                         'target': step.target,
                         'placement': step.placement,
-                        'showCloseButton': step.show_close_button,
                         'showPrevButton': step.show_prev_button,
                         'showNextButton': step.show_next_button,
                         'nextOnTargetClick': step.next_on_target_click,

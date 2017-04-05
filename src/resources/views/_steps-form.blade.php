@@ -64,14 +64,6 @@
 	<div class="row">
 		<div class="col-lg-4">
 			<div class="form-group">
-				<label for="show_close_button">{{ trans('learningtour::admin.fields.step.show-close') }}</label>
-				<input type="hidden" name="show_close_button" value="0"> {{-- dirty hack on null --}}
-				<input type="checkbox" name="show_close_button" value="1"
-					@if(isset($step) && $step->show_close_button || old('show_close_button')) checked @endif>
-			</div>
-		</div>
-		<div class="col-lg-4">
-			<div class="form-group">
 				<label for="show_close_button">{{ trans('learningtour::admin.fields.step.show-prev') }}</label>
 				<input type="hidden" name="show_prev_button" value="0"> {{-- dirty hack on null --}}
 				<input type="checkbox" name="show_prev_button" value="1"
