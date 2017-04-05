@@ -43,7 +43,7 @@ class LearningTourMiddleware
 		foreach ($tours as $key => $tour) {
 			$uncompletedTourStatus = TourStatus::getUncompleted(Auth::user(), $tour->id);
 			$completed_tours_count = TourStatus::countCompleted(Auth::user(), $tour->id);
-			$currentStep = 0;
+			$current_step = 0;
 
 			if ($uncompletedTourStatus || $tour->autostart && ! $completed_tours_count) {
 				$completed = 0;
@@ -53,32 +53,9 @@ class LearningTourMiddleware
 			}
 
 			if ($uncompletedTourStatus) {
-				/*
-				 * If tour step in active state set it, else get first next active step
-				 * */
-				if ($tour->steps->contains('id', $uncompletedTourStatus->step_id)) {
-					foreach ($tour->steps as $num => $step) {
-						if ($step->order == $uncompletedTourStatus->step->order) {
-							$currentStep = $num;
-						}
-					}
-				}
-				else {
-					$nextStep = $tour->steps
-						->first(function ($useless_key, TourStep $item) use ($uncompletedTourStatus) {
-							return $item->order > $uncompletedTourStatus->step->order;
-						});
-					if ( ! $nextStep) {
-						$uncompletedTourStatus->completeTour(Auth::user());
-					}
-					else {
-						foreach ($tour->steps as $num => $step) {
-							if ($step->order == $nextStep->order) {
-								$currentStep = $num;
-							}
-						}
-					}
-				}
+				$current_step = $tour->steps->search(function ($step) use ($uncompletedTourStatus) {
+					return $step->order >= $uncompletedTourStatus->step->order;
+				});
 			}
 
 			$result[$key] = [
@@ -86,7 +63,7 @@ class LearningTourMiddleware
 					'id' => $tour->tour_code,
 					'name' => $tour->name,
 					'steps' => $tour->steps,
-					'step' => $currentStep,
+					'step' => $current_step,
 					'base_id' => $tour->id,
 					'completed' => $completed,
 				]
