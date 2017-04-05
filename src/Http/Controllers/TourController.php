@@ -136,6 +136,7 @@ class TourController extends Controller
 		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.step.created'));
 	}
 
+
 	public function getEditStep($id) {
 		$step = TourStep::findOrFail($id);
 
