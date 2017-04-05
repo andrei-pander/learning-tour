@@ -25,6 +25,7 @@ class CreateTourSteps extends Migration {
 			$table->boolean('next_on_target_click')->default(false);
 			$table->string('route');
 			$table->integer('order')->unsigned();
+			$table->boolean('multipage')->default(false);
 			$table->timestamps();
 
 			$table->foreign('tour_id')
