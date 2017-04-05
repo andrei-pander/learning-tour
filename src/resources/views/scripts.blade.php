@@ -9,7 +9,6 @@
         };
         hopscotch.configure({i18n: language});
         var config = {
-            deferred: {{ isset($deferred) ? $deferred : true }},
             csrf: "{{ csrf_token() }}",
             fetchToursPath: '{{ config('learningtour.routes.fetch_path') }}',
             updateStepPath: '{{ config('learningtour.routes.update_path') }}',

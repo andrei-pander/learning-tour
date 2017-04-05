@@ -34,11 +34,6 @@ class LearningTourMiddleware
 					->where('active', 1)
 					->where('route', $route_action_name);
 			})
-			->with(['steps' => function($query) use ($route_action_name) {
-				$query->orderBy('order', 'asc')
-					->where('active', 1)
-					->where('route', $route_action_name);
-			}])
 			->where('active', 1)
 			->get();
 
@@ -92,7 +87,6 @@ class LearningTourMiddleware
 					'step' => $currentStep,
 					'base_id' => $tour->id,
 					'completed' => $completed,
-					'autostart' => $tour->autostart,
 				]
 			];
 		}

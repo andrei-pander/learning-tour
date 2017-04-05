@@ -101,6 +101,7 @@ class TourController extends Controller
 		$tour->name = $request->get('name');
 		$tour->tour_code = $request->get('tour_code');
 		$tour->active = $request->get('active');
+		$tour->autostart = $request->get('autostart');
 		$tour->save();
 
 		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.tour.updated'));

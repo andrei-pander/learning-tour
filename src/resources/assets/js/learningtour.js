@@ -5,16 +5,15 @@ var learningTour = (function () {
         counter: 0,
         currentTour: '',
         toursData: [],
-        autostart: false,
         updateStepPath: '/tours/update-step',
         completeTourPath: '/tours/complete'
     };
 
     function init(config) {
+        _manualStartTour();
         _initConfig(config);
         _initHopscotchListeners();
         _initHopscotch();
-        _manualStartTour();
     }
 
     function _initHopscotchListeners() {
@@ -60,20 +59,8 @@ var learningTour = (function () {
 
         hopscotch.listen('end', function () {
             _completeTour();
-            // if ( ! config.deferred) {
-                config.counter++;
-                if (config.counter < config.tours.length) {
-                    config.currentTour = config.toursData[config.tours[config.counter]];
-                    setTimeout(function () {
-                        _startHopcotch(config.currentTour);
-                    }, 0);
-                } else {
-                    _clearOverlays();
-                    _removeListeners();
-                }
-            // } else {
-            //     _clearOverlays();
-            // }
+            _clearOverlays();
+            _removeListeners();
         });
 
         hopscotch.listen('show', function () {
@@ -93,21 +80,15 @@ var learningTour = (function () {
 
     function _initConfig(params) {
         config.csrf = params.csrf;
-        config.deferred = params.deferred;
         config.updateStepPath = params.updateStepPath;
         config.completeTourPath = params.completeTourPath;
-        config.autostart = params.autostart;
         _formatTours(params.tours);
     }
 
     function _initHopscotch() {
         config.currentTour = config.toursData[config.tours[config.counter]];
 
-        if (config.currentTour.autostart == 1) {
-            if(config.currentTour.completed == 0) {
-                _startHopcotch(config.currentTour);
-            }
-        } else if (config.currentTour.completed == 0) {
+        if(config.currentTour.completed == 0) {
             _startHopcotch(config.currentTour);
         }
 
@@ -131,7 +112,8 @@ var learningTour = (function () {
                         'showCloseButton': step.show_close_button,
                         'showPrevButton': step.show_prev_button,
                         'showNextButton': step.show_next_button,
-                        'nextOnTragetClick': step.next_on_target_click
+                        'nextOnTragetClick': step.next_on_target_click,
+                        'multipage': step.multipage
                     }
                 });
                 config.toursData[prop] = tour;
@@ -166,7 +148,7 @@ var learningTour = (function () {
 
     function _startHopcotch(data) {
         hopscotch.configure({cookieName: 'hopscotch.' + data.id});
-        hopscotch.startTour(data, data.step);
+        hopscotch.startTour(data);
     }
 
     /*
