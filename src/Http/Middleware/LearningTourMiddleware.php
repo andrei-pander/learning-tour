@@ -45,7 +45,12 @@ class LearningTourMiddleware
 			$completed_tours_count = TourStatus::countCompleted(Auth::user(), $tour->id);
 			$current_step = 0;
 
-			$completed = $uncompletedTourStatus || $tour->autostart && ! $completed_tours_count;
+			if ($uncompletedTourStatus || $tour->autostart && ! $completed_tours_count) {
+				$completed = 0;
+			}
+			else {
+				$completed = 1;
+			}
 
 			if ($uncompletedTourStatus) {
 				$current_step = $tour->steps->search(function ($step) use ($uncompletedTourStatus) {
