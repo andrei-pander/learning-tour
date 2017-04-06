@@ -65,7 +65,7 @@ class LearningTourMiddleware
 					'step' => $current_step,
 					'base_id' => $tour->id,
 					'completed' => $completed,
-					'current_route' => $route_action_name
+					'current_route' => $route_action_name,
 				]
 			];
 		}

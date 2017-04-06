@@ -64,9 +64,6 @@ var learningTour = (function () {
             _removeListeners();
         });
 
-        hopscotch.listen('next', function () {
-        });
-
         hopscotch.listen('show', function () {
             _updateTourStatus();
         });
