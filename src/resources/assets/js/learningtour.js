@@ -24,9 +24,6 @@ var learningTour = (function () {
             var targetEl = $(target);
             var helper = $('.helper');
 
-            // targetEl.on('click', function () {
-            //     hopscotch.nextStep();
-            // });
 
             if(prev) {
                 $('#'+prev).removeClass('overlay-relative');
@@ -65,6 +62,9 @@ var learningTour = (function () {
             _completeTour();
             _clearOverlays();
             _removeListeners();
+        });
+
+        hopscotch.listen('next', function () {
         });
 
         hopscotch.listen('show', function () {
@@ -119,7 +119,9 @@ var learningTour = (function () {
                         'showPrevButton': step.show_prev_button,
                         'showNextButton': step.show_next_button,
                         'nextOnTargetClick': step.next_on_target_click,
-                        'multipage': step.multipage
+                        'route': step.route,
+                        'multipage': step.multipage,
+                        'onNext': ['fixDropdowns', step, tour]
                     }
                 });
                 config.toursData[prop] = tour;
@@ -154,7 +156,9 @@ var learningTour = (function () {
 
     function _startHopcotch(data) {
         hopscotch.configure({cookieName: 'hopscotch.' + data.id});
-        hopscotch.startTour(data, data.step);
+        if (data.steps[data.step + 1].route == config.currentTour.current_route) {
+            hopscotch.startTour(data, data.step);
+        }
     }
 
     /*

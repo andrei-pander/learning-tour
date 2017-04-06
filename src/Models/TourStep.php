@@ -22,7 +22,7 @@ namespace Majesko\LearningTour\Models;
  * @see TourStep::tour()
  */
 class TourStep extends BaseModel {
-	protected $visible = ['id', 'target', 'placement', 'title', 'content', 'order', 'position', 'show_prev_button', 'show_next_button', 'next_on_target_click', 'active', 'multipage'];
+	protected $visible = ['id', 'target', 'placement', 'title', 'content', 'order', 'position', 'show_prev_button', 'show_next_button', 'next_on_target_click', 'active', 'multipage', 'route'];
 
 	public function rules() {
 		return [

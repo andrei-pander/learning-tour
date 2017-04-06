@@ -1,4 +1,15 @@
 <script>
+	var fixDropdowns = function (step, tour) {
+	    var nextStep = tour.steps[tour.step+1];
+	    console.log(nextStep);
+        if(step.multipage && nextStep.route == step.route) {
+            setTimeout(function () {
+                hopscotch.startTour(tour, hopscotch.getCurrStepNum());
+            }, 500);
+        }
+    };
+
+	learningTour.appendHelper('fixDropdowns', fixDropdowns);
     $(document).ready(function () {
         var language = {
             nextBtn: "{{ trans('learningtour::buttons.next') }}",
