@@ -12,7 +12,6 @@ namespace Majesko\LearningTour\Models;
  * @property string route
  * @property string order
  * @property string position
- * @property bool show_close_button
  * @property bool show_prev_button
  * @property bool show_next_button
  * @property bool active
@@ -23,8 +22,7 @@ namespace Majesko\LearningTour\Models;
  * @see TourStep::tour()
  */
 class TourStep extends BaseModel {
-	protected $visible = ['id', 'target', 'placement', 'title', 'content', 'order', 'position',
-		'show_close_button', 'show_prev_button', 'show_next_button', 'next_on_target_click', 'active', 'multipage'];
+	protected $visible = ['id', 'target', 'placement', 'title', 'content', 'order', 'position', 'show_prev_button', 'show_next_button', 'next_on_target_click', 'active', 'multipage'];
 
 	public function rules() {
 		return [

@@ -125,12 +125,12 @@ class TourController extends Controller
 		$step->content = $request->get('content');
 		$step->target = $request->get('target');
 		$step->placement = $request->get('placement');
-		$step->show_close_button = $request->get('show_close_button');
 		$step->show_prev_button = $request->get('show_prev_button');
 		$step->show_next_button = $request->get('show_next_button');
 		$step->active = $request->get('active');
 		$step->order = $request->get('order');
 		$step->route = $request->get('route');
+		$step->next_on_target_click = $request->get('next_on_target_click');
 		$tour->steps()->save($step);
 
 		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.step.created'));
@@ -154,12 +154,12 @@ class TourController extends Controller
 		$step->content = $request->get('content');
 		$step->target = $request->get('target');
 		$step->placement = $request->get('placement');
-		$step->show_close_button = $request->get('show_close_button');
 		$step->show_prev_button = $request->get('show_prev_button');
 		$step->show_next_button = $request->get('show_next_button');
 		$step->active = $request->get('active');
 		$step->order = $request->get('order');
 		$step->route = $request->get('route');
+		$step->next_on_target_click = $request->get('next_on_target_click');
 		$step->save();
 
 		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.step.updated'));
