@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\View;
 use Majesko\LearningTour\Models\TourStatus;
 use Majesko\LearningTour\Models\TourStep;
 use Majesko\LearningTour\Models\Tour;
+use Illuminate\Support\Collection;
 
 class TourController extends Controller
 {
@@ -60,6 +61,7 @@ class TourController extends Controller
 	}
 
 	public function getCreate() {
+
 		return View::make('learningtour::edit');
 	}
 
@@ -110,7 +112,15 @@ class TourController extends Controller
 	public function getCreateStep($tour_id) {
 		$tour = Tour::findOrFail($tour_id);
 
-		return View::make('learningtour::edit-step', ['tour' => $tour]);
+		$routeList = Collection::make(\Route::getRoutes()->getRoutes())
+			->filter(function (\Illuminate\Routing\Route $route) {
+				return in_array('GET', $route->getMethods());
+			})
+			->map(function (\Illuminate\Routing\Route $route) {
+				return $route->getActionName();
+			});
+
+		return View::make('learningtour::edit-step', ['tour' => $tour, 'routeList' => $routeList]);
 	}
 
 	public function postCreateStep(Request $request) {
@@ -140,8 +150,15 @@ class TourController extends Controller
 
 	public function getEditStep($id) {
 		$step = TourStep::findOrFail($id);
+		$routeList = Collection::make(\Route::getRoutes()->getRoutes())
+			->filter(function (\Illuminate\Routing\Route $route) {
+				return in_array('GET', $route->getMethods());
+			})
+			->map(function (\Illuminate\Routing\Route $route) {
+				return $route->getActionName();
+			});
 
-		return view('learningtour::list-steps', ['step' => $step]);
+		return view('learningtour::list-steps', ['step' => $step, 'routeList' => $routeList]);
 	}
 
 	public function postEditStep(Request $request, $id) {

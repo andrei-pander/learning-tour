@@ -109,12 +109,12 @@
 	<div class="form-group">
 		<label for="route">{{ trans('learningtour::admin.fields.step.route') }}</label>
 		<select class="form-control" name="route" id="">
-			@foreach (\Illuminate\Support\Facades\Route::getRoutes() as $routeItem)
+			@foreach ($routeList as $routeItem)
 				<option
-					@if(isset($step) && $step->route == $routeItem->getActionName() || $routeItem == old('route'))
+					@if(isset($step) && $step->route == $routeItem || $routeItem == old('route'))
 						selected
 					@endif
-					value="{{ $routeItem->getActionName() }}">{{ class_basename($routeItem->getActionName()) }}
+					value="{{ $routeItem }}">{{ class_basename($routeItem) }}
 				</option>
 			@endforeach
 		</select>

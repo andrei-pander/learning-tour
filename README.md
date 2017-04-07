@@ -21,6 +21,9 @@
 php artisan vendor:publish --tag=migrations
 php artisan vendor:publish --tag=config
 ```
+Добавить middleware ко всем маршрутам, в которых будут обучающие туры:
+
+
 Добавить маршруты, необходимые для работы в routes.php 
 ```php
 Route::post('tours/update-step/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@postUpdateStep');
@@ -49,8 +52,9 @@ Route::group(['prefix' => 'tours'], function () {
     Route::post('delete-step/{id}', '\Majesko\LearningTour\Http\Controllers\TourController@postDeleteStep')->name('learningtour::tours.delete-step');
 });
 ```
-Подключить скрипты и стили (в gulpfile или шаблон)
+Подключить hopscotch.js и hopscotch.css в шаблоны
 
+Подключить скрипты и стили (в gulpfile или шаблон)
 ```
 vendor/majesko/learning-tour/src/resources/assets/css/learningtour.css'
 vendor/majesko/learning-tour/src/resources/assets/js/learningtour.js'
