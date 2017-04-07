@@ -112,7 +112,7 @@ class TourController extends Controller
 	public function getCreateStep($tour_id) {
 		$tour = Tour::findOrFail($tour_id);
 
-		$routeList = Collection::make(\Route::getRoutes()->getRoutes())
+		$action_names = Collection::make(\Route::getRoutes()->getRoutes())
 			->filter(function (\Illuminate\Routing\Route $route) {
 				return in_array('GET', $route->getMethods());
 			})
@@ -120,7 +120,7 @@ class TourController extends Controller
 				return $route->getActionName();
 			});
 
-		return View::make('learningtour::edit-step', ['tour' => $tour, 'routeList' => $routeList]);
+		return View::make('learningtour::edit-step', ['tour' => $tour, 'action_names' => $action_names]);
 	}
 
 	public function postCreateStep(Request $request) {
@@ -150,7 +150,7 @@ class TourController extends Controller
 
 	public function getEditStep($id) {
 		$step = TourStep::findOrFail($id);
-		$routeList = Collection::make(\Route::getRoutes()->getRoutes())
+		$action_names = Collection::make(\Route::getRoutes()->getRoutes())
 			->filter(function (\Illuminate\Routing\Route $route) {
 				return in_array('GET', $route->getMethods());
 			})
@@ -158,7 +158,7 @@ class TourController extends Controller
 				return $route->getActionName();
 			});
 
-		return view('learningtour::list-steps', ['step' => $step, 'routeList' => $routeList]);
+		return view('learningtour::list-steps', ['step' => $step, 'action_names' => $action_names]);
 	}
 
 	public function postEditStep(Request $request, $id) {
