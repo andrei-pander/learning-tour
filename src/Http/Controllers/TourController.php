@@ -130,6 +130,7 @@ class TourController extends Controller
 		$step->active = $request->get('active');
 		$step->order = $request->get('order');
 		$step->route = $request->get('route');
+		$step->multipage = $request->get('multipage');
 		$step->next_on_target_click = $request->get('next_on_target_click');
 		$tour->steps()->save($step);
 
@@ -159,6 +160,7 @@ class TourController extends Controller
 		$step->active = $request->get('active');
 		$step->order = $request->get('order');
 		$step->route = $request->get('route');
+		$step->multipage = $request->get('multipage');
 		$step->next_on_target_click = $request->get('next_on_target_click');
 		$step->save();
 

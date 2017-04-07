@@ -153,7 +153,7 @@ var learningTour = (function () {
 
     function _startHopcotch(data) {
         hopscotch.configure({cookieName: 'hopscotch.' + data.id});
-        if (data.steps[data.step + 1].route == config.currentTour.current_route) {
+        if (data.step == 0 || data.steps[data.step + 1].route == config.currentTour.current_route) {
             hopscotch.startTour(data, data.step);
         }
     }
