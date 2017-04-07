@@ -4,7 +4,7 @@
 ## Installation steps
 Подключить библиотеку hopscotch в проект (bower.json)
 ```
-"hopscotch": "~0.2.7"
+"hopscotch": "0.2.7"
 ```
 Добавить пакет в composer.json
 
