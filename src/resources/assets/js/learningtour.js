@@ -153,13 +153,14 @@ var learningTour = (function () {
 
     function _startHopcotch(data) {
         hopscotch.configure({cookieName: 'hopscotch.' + data.id});
-        // Only start hopscotch if on first step or step route equal tour route
-        console.log(data);
-        console.log(config.currentTour);
-        if (data.step == 0
-                ? data.steps[data.step].route == config.currentTour.current_route
-                : data.steps[data.step + 1].route == config.currentTour.current_route
-        ) {
+        /*
+         * Only start hopscotch if on first step or step route equal tour route
+         * We increment step because backend returns previous step number
+         * and step number updates on backend when bubble shows up
+         */
+        var step_key = data.step == 0 ? 0 : data.step + 1;
+
+        if (data.steps[step_key].route == config.currentTour.current_route) {
             hopscotch.startTour(data, data.step);
         }
     }
