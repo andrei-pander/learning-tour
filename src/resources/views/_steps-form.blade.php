@@ -93,7 +93,7 @@
 			<div class="form-group">
 				<label for="active">{{ trans('learningtour::admin.fields.step.multipage') }}</label>
 				<input type="hidden" name="multipage" value="0">
-				<input type="checkbox" name="multipage" value="1" @if(isset($step) && $step->active || old('multipage')) checked @endif>
+				<input type="checkbox" name="multipage" value="1" @if(isset($step) && $step->multipage || old('multipage')) checked @endif>
 			</div>
 		</div>
 
