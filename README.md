@@ -2,9 +2,10 @@
 *Learning tour for  Laravel projects (5.1+), based on Hopscotch learning tour (https://github.com/linkedin/hopscotch)*
 
 ## Installation steps
-Подключить библиотеку hopscotch в проект
-
-
+Подключить библиотеку hopscotch в проект (bower.json)
+```
+"hopscotch": "~0.2.7"
+```
 Добавить пакет в composer.json
 
 Выполнить composer update.
@@ -61,4 +62,9 @@ vendor/majesko/learning-tour/src/resources/assets/js/learningtour.js'
     @include('learningtour::scripts', ['deferred' => 'true', 'tours' => $learningtours])
 @endif
 ```
-
+На необходимые страницы добавить меню запуска туров
+```php
+@if(isset($learningtours))
+    @include('learningtour::scripts', ['deferred' => 'true', 'tours' => $learningtours])
+@endif
+```
