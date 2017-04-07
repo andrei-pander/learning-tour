@@ -60,7 +60,9 @@
 			value="{{ isset($step) ? $step->order : old('order') }}">
 		<span class="help-block">{{ $errors->first('order') }}</span>
 	</div>
-
+	<div class="row">
+		<p class="text-muted">Если следующий шаг тура указывает на скрытый или не существующий элемент DOM нужно отметить его как шаг на другой странице.</p>
+	</div>
 	<div class="row">
 		<div class="col-lg-4">
 			<div class="form-group">
