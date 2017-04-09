@@ -12,6 +12,7 @@ var learningTour = (function () {
     function init(config) {
         _manualStartTour();
         _initConfig(config);
+        _buildMenu(config.toursData);
         _initHopscotchListeners();
         _initHopscotch();
     }
@@ -22,34 +23,34 @@ var learningTour = (function () {
         hopscotch.listen('show', function () {
             var target = hopscotch.getCurrTarget();
             var targetEl = $(target);
+            $('.helper').remove();
             var helper = $('.helper');
 
 
             if(prev) {
-                $('#'+prev).removeClass('overlay-relative');
+                $(prev).removeClass('overlay-relative');
             }
             targetEl.addClass('overlay-relative');
-
             if ( ! helper.length) {
-                // var padding = 5;
+                var padding = 10;
                 var newHelper = '<div class="helper"></div>';
                 $('body').append(newHelper);
                 helper = $('.helper');
             }
 
-
             // Use Helper Layer for highlight target element.
 
-            var helperPosX = targetEl.offset().left;
-            var helperPosY = targetEl.offset().top;
-            var targetWidth = targetEl.outerWidth();
-            var targetHeight = targetEl.outerHeight();
+            var helperPosX = targetEl.offset().left - padding;
+            var helperPosY = targetEl.offset().top - padding;
+            var targetWidth = targetEl.outerWidth() + padding*2;
+            var targetHeight = targetEl.outerHeight() + padding*2;
 
             helper.css('width', targetWidth);
             helper.css('height', targetHeight);
             helper.offset({left: helperPosX, top: helperPosY});
 
-            prev = target.id;
+            prev = target;
+            _updateTourStatus();
         });
 
         hopscotch.listen('start', function () {
@@ -59,14 +60,11 @@ var learningTour = (function () {
         });
 
         hopscotch.listen('end', function () {
-            _completeTour();
             _clearOverlays();
             _removeListeners();
+            _completeTour();
         });
 
-        hopscotch.listen('show', function () {
-            _updateTourStatus();
-        });
         hopscotch.listen('close', function () {
             _clearOverlays();
         });
@@ -95,8 +93,6 @@ var learningTour = (function () {
         if (config.currentTour && ! config.currentTour.completed) {
             _startHopcotch(config.currentTour);
         }
-
-        _buildMenu(config.toursData);
     }
 
     function _formatTours(data) {
@@ -130,7 +126,7 @@ var learningTour = (function () {
         $.ajax({
             method: 'POST',
             url: config.updateStepPath
-                +'/'+config.currentTour.steps[hopscotch.getCurrStepNum()].id,
+            +'/'+config.currentTour.steps[hopscotch.getCurrStepNum()].id,
             data: {
                 _token: config.csrf
             }
@@ -143,6 +139,10 @@ var learningTour = (function () {
             url: config.completeTourPath+'/'+config.currentTour.base_id,
             data: {_token: config.csrf}
         });
+        if( config.counter + 1 <= config.tours.length) {
+            config.counter = config.counter + 1;
+            _initHopscotch();
+        }
     }
 
     function _removeListeners() {
@@ -153,15 +153,11 @@ var learningTour = (function () {
 
     function _startHopcotch(data) {
         hopscotch.configure({cookieName: 'hopscotch.' + data.id});
-        /*
-         * Only start hopscotch if on first step or step route equal tour route
-         * We increment step because backend returns previous step number
-         * and step number updates on backend when bubble shows up
-         */
-        var step_key = data.step == 0 ? 0 : data.step + 1;
 
-        if (data.steps[step_key].route == config.currentTour.current_route) {
-            hopscotch.startTour(data, data.step);
+        var current_step_num = data.next_step;
+
+        if (data.steps[current_step_num].route == config.currentTour.current_route) {
+            hopscotch.startTour(data, current_step_num);
         }
     }
 
