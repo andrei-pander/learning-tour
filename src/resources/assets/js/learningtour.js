@@ -139,7 +139,7 @@ var learningTour = (function () {
             url: config.completeTourPath+'/'+config.currentTour.base_id,
             data: {_token: config.csrf}
         });
-        if( config.counter + 1 <= config.tours.length) {
+        if( config.counter + 1 < config.tours.length) {
             config.counter = config.counter + 1;
             _initHopscotch();
         }
@@ -154,6 +154,10 @@ var learningTour = (function () {
     function _startHopcotch(data) {
         hopscotch.configure({cookieName: 'hopscotch.' + data.id});
 
+        /**
+         * data.step is last completed step from current tour (value from tour_statuses)
+         * data.next_step is first uncompleted step for current tour
+         */
         var current_step_num = data.next_step;
 
         if (data.steps[current_step_num].route == config.currentTour.current_route) {
