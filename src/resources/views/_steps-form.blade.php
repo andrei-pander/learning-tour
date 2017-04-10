@@ -54,12 +54,20 @@
 		<span class="help-block">{{ $errors->first('target') }}</span>
 	</div>
 
+	<div class="form-group @if($errors->has('overlay')) has-error @endif">
+		<label for="order" class="control-label">{{ trans('learningtour::admin.fields.step.overlay') }}</label>
+		<input type="text" class="form-control" name="overlay"
+			   value="{{ isset($step) ? $step->overlay : old('overlay') }}">
+		<span class="help-block">{{ $errors->first('overlay') }}</span>
+	</div>
+
 	<div class="form-group @if($errors->has('order')) has-error @endif">
 		<label for="order" class="control-label">{{ trans('learningtour::admin.fields.step.order') }}</label>
 		<input type="number" class="form-control" name="order"
 			value="{{ isset($step) ? $step->order : old('order') }}">
 		<span class="help-block">{{ $errors->first('order') }}</span>
 	</div>
+
 	<div class="row">
 		<p class="text-muted">Если следующий шаг тура указывает на скрытый или не существующий элемент DOM нужно отметить его как шаг на другой странице.</p>
 	</div>

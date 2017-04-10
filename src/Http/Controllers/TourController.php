@@ -142,6 +142,7 @@ class TourController extends Controller
 		$step->route = $request->get('route');
 		$step->multipage = $request->get('multipage');
 		$step->next_on_target_click = $request->get('next_on_target_click');
+		$step->overlay = $request->get('overlay');
 		$tour->steps()->save($step);
 
 		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.step.created'));
@@ -179,6 +180,7 @@ class TourController extends Controller
 		$step->route = $request->get('route');
 		$step->multipage = $request->get('multipage');
 		$step->next_on_target_click = $request->get('next_on_target_click');
+		$step->overlay = $request->get('overlay');
 		$step->save();
 
 		return Redirect::route('learningtour::tours.list')->with('status', trans('learningtour::admin.step.updated'));
