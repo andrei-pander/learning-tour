@@ -24,7 +24,7 @@ var learningTour = (function () {
             var overlay_target = config.currentTour.steps[hopscotch.getCurrStepNum()].overlay;
             var target = hopscotch.getCurrTarget();
 
-            if(overlay_target.length) {
+            if (overlay_target.length) {
                 target = overlay_target;
             }
 
@@ -33,11 +33,11 @@ var learningTour = (function () {
             var helper = $('.helper');
 
 
-            if(prev) {
+            if (prev) {
                 $(prev).removeClass('overlay-relative');
             }
             targetEl.addClass('overlay-relative');
-            if ( ! helper.length) {
+            if (!helper.length) {
                 var padding = 10;
                 var newHelper = '<div class="helper"></div>';
                 $('body').append(newHelper);
@@ -48,8 +48,8 @@ var learningTour = (function () {
 
             var helperPosX = targetEl.offset().left - padding;
             var helperPosY = targetEl.offset().top - padding;
-            var targetWidth = targetEl.outerWidth() + padding*2;
-            var targetHeight = targetEl.outerHeight() + padding*2;
+            var targetWidth = targetEl.outerWidth() + padding * 2;
+            var targetHeight = targetEl.outerHeight() + padding * 2;
 
             helper.css('width', targetWidth);
             helper.css('height', targetHeight);
@@ -60,7 +60,7 @@ var learningTour = (function () {
         });
 
         hopscotch.listen('start', function () {
-            if ( ! $('.overlay').length) {
+            if (!$('.overlay').length) {
                 $('body').append('<div class="overlay"></div>');
             }
         });
@@ -90,12 +90,13 @@ var learningTour = (function () {
         config.csrf = params.csrf;
         config.updateStepPath = params.updateStepPath;
         config.completeTourPath = params.completeTourPath;
-        config.currentTour = config.toursData[config.tours[config.counter]];
         _formatTours(params.tours);
     }
 
     function _initHopscotch() {
-        if (config.currentTour && ! config.currentTour.completed) {
+        config.currentTour = config.toursData[config.tours[config.counter]];
+
+        if (config.currentTour && !config.currentTour.completed) {
             _startHopcotch(config.currentTour);
         }
     }
@@ -132,7 +133,7 @@ var learningTour = (function () {
         $.ajax({
             method: 'POST',
             url: config.updateStepPath
-            +'/'+config.currentTour.steps[hopscotch.getCurrStepNum()].id,
+            + '/' + config.currentTour.steps[hopscotch.getCurrStepNum()].id,
             data: {
                 _token: config.csrf
             }
@@ -142,10 +143,10 @@ var learningTour = (function () {
     function _completeTour() {
         $.ajax({
             method: 'POST',
-            url: config.completeTourPath+'/'+config.currentTour.base_id,
+            url: config.completeTourPath + '/' + config.currentTour.base_id,
             data: {_token: config.csrf}
         });
-        if( config.counter + 1 < config.tours.length) {
+        if (config.counter + 1 < config.tours.length) {
             config.counter = config.counter + 1;
             _initHopscotch();
         }
@@ -169,7 +170,7 @@ var learningTour = (function () {
         config.step = data.steps[data.next_step];
 
         if (data.steps[current_step_num].route == config.currentTour.current_route) {
-            hopscotch.startTour(data);
+            hopscotch.startTour(data, current_step_num);
         }
     }
 
